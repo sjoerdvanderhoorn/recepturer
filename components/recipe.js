@@ -54,14 +54,55 @@ Vue.component('recipe', {
     data: function() {
         return {
             outputText: this.strip(this.text),
-            position: null
+            position: null,
+            settings: {
+                unitofmeasure: [
+                    { name: "g", unit: "gram", conversion: 1 },
+                    { name: "gram", unit: "gram", conversion: 1 },
+                    { name: "kg", unit: "gram", conversion: 1000 },
+                    { name: "kilo", unit: "gram", conversion: 1000 },
+                    { name: "kilogram", unit: "gram", conversion: 1000 },
+                    { name: "pond", unit: "gram", conversion: 500 },
+                    { name: "ml", unit: "milliliter", conversion: 1 },
+                    { name: "milliliter", unit: "milliliter", conversion: 1 },
+                    { name: "dl", unit: "milliliter", conversion: 10 },
+                    { name: "deciliter", unit: "milliliter", conversion: 10 },
+                    { name: "cl", unit: "milliliter", conversion: 100 },
+                    { name: "centiliter", unit: "milliliter", conversion: 100 },
+                    { name: "l", unit: "milliliter", conversion: 1000 },
+                    { name: "liter", unit: "milliliter", conversion: 1000 },
+                    { name: "kop", unit: "kop", conversion: 1 },
+                    { name: "kopje", unit: "kop", conversion: 1 },
+                    { name: "kopjes", unit: "kop", conversion: 1 },
+                    { name: "el", unit: "el", conversion: 1 },
+                    { name: "eetlepel", unit: "el", conversion: 1 },
+                    { name: "eetlepels", unit: "el", conversion: 1 },
+                    { name: "tl", unit: "tl", conversion: 1 },
+                    { name: "theelepel", unit: "tl", conversion: 1 },
+                    { name: "theelepels", unit: "tl", conversion: 1 },
+                    { name: "stuk", unit: "stuk", conversion: 1 },
+                    { name: "stuks", unit: "stuk", conversion: 1 },
+                    { name: "hele", unit: "hele", conversion: 1 },
+                    { name: "halve", unit: "hele", conversion: 0.5 },
+                    { name: "paar", unit: "paar", conversion: 1 },
+                    { name: "teen", unit: "teen", conversion: 1 },
+                    { name: "tenen", unit: "teen", conversion: 1 },
+                    { name: "teentje", unit: "teen", conversion: 1 },
+                    { name: "teentjes", unit: "teen", conversion: 1 },
+                    { name: "stengel", unit: "stengel", conversion: 1 },
+                    { name: "stengels", unit: "stengel", conversion: 1 }
+                ],
+                temperature: ["c", "f", "graden", "celsius", "fahrenheit", "fahrenheit"],
+                time: ["m", "min", "minuut", "minuten", "u", "uur", "uren", "s", "seconde", "seconden", "secondes"]
+            }
         }
     },
     created: function() {
         // Declare private variables
         this.ingredientRegex = /\b([\d\,\.]+)\s(gram|paar|stuks|kilo|liter|tenen|teentjes|stengel|stengels|el|eetlepel|l|k|g)\s([\w\-\'\’\`]+)/gi;
-        this.temperatureRegex = /\b(\d+|hoog|laag|normaal|klein|groot)\s(vuur|vermogen|fahrenheit|graden celsius|graden|celsius)\b/gi;
-        this.timeRegex = /\b(([\d\,\.\-]| tot )+)\s(min|minuten|minuut|uren|uur|seconde|seconden|secondes)\b/gi;
+        this.ingredientRegex = new RegExp(`\\b([\\d\\,\\.]+)\\s(${this.settings.unitofmeasure.map(unit => unit.name).join("|")})\\s([\\w\\-\\'\\’\\\`]+)`, "gi");
+        this.temperatureRegex = new RegExp(`\\b(([\\d])+)\\s(${this.settings.temperature.join("|")})\\b`, "gi");
+        this.timeRegex = new RegExp(`\\b(([\\d\\,\\.\\-])+)\\s(${this.settings.time.join("|")})\\b`, "gi");
     },
     mounted: function() {
 
@@ -76,8 +117,8 @@ Vue.component('recipe', {
                 // Parse quantity, unit, and product from ingredient
                 var match = ingredient.match(new RegExp(this.ingredientRegex, "i"));
                 return {
-                    quantity: parseFloat(match[1].replace(",", ".")),
-                    unit: match[2],
+                    quantity: parseFloat(match[1].replace(",", ".")) * this.settings.unitofmeasure.find(unit => unit.name == match[2]).conversion,
+                    unit: this.settings.unitofmeasure.find(unit => unit.name == match[2]).unit,
                     product: match[3]
                 };
             }).reduce((all, ingredient) => {
@@ -109,7 +150,7 @@ Vue.component('recipe', {
                 e.target.focus();
             }
             // Store output
-            this.outputText = this.strip(this.formattedText);
+            this.outputText = this.strip(e.target.innerHTML);
         },
         format: function(html) {
             // Remove current formatting
@@ -126,7 +167,7 @@ Vue.component('recipe', {
             return html;
         },
         strip: function(html) {
-            html = html.replace(/<(div|br)(.*?)>/gi, "\n");
+            html = html.replace(/<(div|br)(.*?)>/gi, "<li>");
             html = html.replace(/<li>/gi, "\n* ");
             html = html.replace(/<(.*?)>/gi, "");
             //html = html.replace(/&nbsp;/gi, " ");
