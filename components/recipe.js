@@ -8,21 +8,29 @@ Vue.component('recipe', {
             </div>
             <div class="row" style="margin-bottom: 0;">
                 <div class="col s12 offset-m1">
-                    Title
-                    Description
-                    Picture
-                    Add to menu
+                    <div class="row">
+                        <div class="col s8">
+                            <h4>Title</h4>
+                            <input id="title" type="text" v-model="recipe.title" placeholder="The greatest dish on earth...!" class="validate">
+                            <h4>Description</h4>
+                            <textarea id="description" v-model="recipe.description" placeholder="Simply the best..." class="materialize-textarea"></textarea>
+                        </div>
+                        <div class="col s4">
+                            <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add to this week's menu</a>
+                            <a class="waves-effect waves-light btn"><i class="material-icons left">remove</i>Delete</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col s12 offset-m1">
                     <div class="row">
                         <div class="col s8">
-                            <h4>Bereidingswijze</h4>
+                            <h4>Directions</h4>
                             <div contenteditable="true" @input="edit" v-html="formattedText"></div>
                         </div>
                         <div class="col s4">
-                            <h4>Ingredienten</h4>
+                            <h4>Ingredients</h4>
                             <table class="striped">
                                 <tbody>
                                     <tr v-for="ingredient in ingredients">
@@ -50,90 +58,20 @@ Vue.component('recipe', {
             </div>
         </div>
     `,
-    props: ["text"],
+    props: ["recipe"],
     data: function() {
         return {
-            outputText: this.strip(this.text),
-            position: null,
-            settings: {
-                unitofmeasure: [
-                    { name: "g", unit: "gram", conversion: 1 },
-                    { name: "gram", unit: "gram", conversion: 1 },
-                    { name: "kg", unit: "gram", conversion: 1000 },
-                    { name: "kilo", unit: "gram", conversion: 1000 },
-                    { name: "kilogram", unit: "gram", conversion: 1000 },
-                    { name: "pond", unit: "gram", conversion: 500 },
-                    { name: "ml", unit: "milliliter", conversion: 1 },
-                    { name: "milliliter", unit: "milliliter", conversion: 1 },
-                    { name: "dl", unit: "milliliter", conversion: 10 },
-                    { name: "deciliter", unit: "milliliter", conversion: 10 },
-                    { name: "cl", unit: "milliliter", conversion: 100 },
-                    { name: "centiliter", unit: "milliliter", conversion: 100 },
-                    { name: "l", unit: "milliliter", conversion: 1000 },
-                    { name: "liter", unit: "milliliter", conversion: 1000 },
-                    { name: "kop", unit: "kop", conversion: 1 },
-                    { name: "kopje", unit: "kop", conversion: 1 },
-                    { name: "kopjes", unit: "kop", conversion: 1 },
-                    { name: "el", unit: "el", conversion: 1 },
-                    { name: "eetlepel", unit: "el", conversion: 1 },
-                    { name: "eetlepels", unit: "el", conversion: 1 },
-                    { name: "tl", unit: "tl", conversion: 1 },
-                    { name: "theelepel", unit: "tl", conversion: 1 },
-                    { name: "theelepels", unit: "tl", conversion: 1 },
-                    { name: "stuk", unit: "stuk", conversion: 1 },
-                    { name: "stuks", unit: "stuk", conversion: 1 },
-                    { name: "hele", unit: "hele", conversion: 1 },
-                    { name: "halve", unit: "hele", conversion: 0.5 },
-                    { name: "paar", unit: "paar", conversion: 1 },
-                    { name: "teen", unit: "teen", conversion: 1 },
-                    { name: "tenen", unit: "teen", conversion: 1 },
-                    { name: "teentje", unit: "teen", conversion: 1 },
-                    { name: "teentjes", unit: "teen", conversion: 1 },
-                    { name: "stengel", unit: "stengel", conversion: 1 },
-                    { name: "stengels", unit: "stengel", conversion: 1 }
-                ],
-                temperature: ["c", "f", "graden", "celsius", "fahrenheit", "fahrenheit"],
-                time: ["m", "min", "minuut", "minuten", "u", "uur", "uren", "s", "seconde", "seconden", "secondes"]
-            }
+            outputText: this.strip(this.recipe ? this.recipe.directions : ""),
+            position: null
         }
-    },
-    created: function() {
-        // Declare private variables
-        this.ingredientRegex = /\b([\d\,\.]+)\s(gram|paar|stuks|kilo|liter|tenen|teentjes|stengel|stengels|el|eetlepel|l|k|g)\s([\w\-\'\’\`]+)/gi;
-        this.ingredientRegex = new RegExp(`\\b([\\d\\,\\.]+)\\s(${this.settings.unitofmeasure.map(unit => unit.name).join("|")})\\s([\\w\\-\\'\\’\\\`]+)`, "gi");
-        this.temperatureRegex = new RegExp(`\\b(([\\d])+)\\s(${this.settings.temperature.join("|")})\\b`, "gi");
-        this.timeRegex = new RegExp(`\\b(([\\d\\,\\.\\-])+)\\s(${this.settings.time.join("|")})\\b`, "gi");
-    },
-    mounted: function() {
-
     },
     computed: {
         formattedText: function() {
-            return this.format(this.$props.text);
+            return this.format(this.$props.recipe ? this.$props.recipe.directions : "");
         },
         ingredients: function() {
-            var ingredients = this.outputText.match(this.ingredientRegex);
-            ingredients = (ingredients || []).map(ingredient => {
-                // Parse quantity, unit, and product from ingredient
-                var match = ingredient.match(new RegExp(this.ingredientRegex, "i"));
-                return {
-                    quantity: parseFloat(match[1].replace(",", ".")) * this.settings.unitofmeasure.find(unit => unit.name == match[2]).conversion,
-                    unit: this.settings.unitofmeasure.find(unit => unit.name == match[2]).unit,
-                    product: match[3]
-                };
-            }).reduce((all, ingredient) => {
-                // Combine ingredients that have the same unit and product
-                var existing = all.find(item => item.unit == ingredient.unit && item.product == ingredient.product);
-                if (existing) {
-                    existing.quantity += ingredient.quantity;
-                } else {
-                    all.push(ingredient);
-                }
-                return all;
-            }, []).sort((a, b) => {
-                // Order ingredients by product name and then quantity
-                return a.product.localeCompare(b.product) || a.quantity - b.quantity;
-            });
+            var ingredients = rcp.parse(this.outputText);
+            ingredients = rcp.aggregate(ingredients);
             return ingredients;
         }
     },
@@ -153,26 +91,10 @@ Vue.component('recipe', {
             this.outputText = this.strip(e.target.innerHTML);
         },
         format: function(html) {
-            // Remove current formatting
-            html = this.strip(html);
-            // Mark using regular expressions
-            html = html.replace(this.ingredientRegex, "<span class='recipe ingredient'>$&</span>");
-            html = html.replace(this.temperatureRegex, "<span class='recipe temperature'>$&</span>");
-            html = html.replace(this.timeRegex, "<span class='recipe time'>$&</span>");
-            // Add formatting for lists and newlines
-            html = html.replace(/\n\*\s(.*)/gi, "<ol><li>$1</li></ol>");
-            html = html.replace(/<\/li><\/ol><ol><li>/gi, "</li><li>");
-            html = html.replace(/\n/gi, "<br/>");
-            //console.log(html)
-            return html;
+            return rcp.format(html);
         },
         strip: function(html) {
-            html = html.replace(/<(div|br)(.*?)>/gi, "<li>");
-            html = html.replace(/<li>/gi, "\n* ");
-            html = html.replace(/<(.*?)>/gi, "");
-            //html = html.replace(/&nbsp;/gi, " ");
-            //html = html.replace(/" "+/g, " ");
-            return html;
+            return rcp.strip(html);
         }
     }
 });

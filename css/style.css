@@ -7,9 +7,9 @@ div[contenteditable="true"] li {
 }
 
 div[contenteditable="true"] {
-    background-color: rgba(228, 228, 228, 0.5);
     padding: 5px;
     margin: 5px;
+    border-bottom: 1px solid black;
 }
 
 div[contenteditable="true"] .recipe {
@@ -19,13 +19,13 @@ div[contenteditable="true"] .recipe {
 }
 
 div[contenteditable="true"] .recipe.ingredient {
-    background-color: rgba(200, 200, 216, 0.3);
+    background-color: rgba(228, 228, 228, 0.5);
 }
 
 div[contenteditable="true"] .recipe.time {
-    background-color: rgba(94, 124, 96, 0.3);
+    background-color: rgba(228, 228, 228, 0.5);
 }
 
 div[contenteditable="true"] .recipe.temperature {
-    background-color: rgba(173, 128, 128, 0.3);
+    background-color: rgba(228, 228, 228, 0.5);
 }
