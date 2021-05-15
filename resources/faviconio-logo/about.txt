@@ -1,5 +1,8 @@
 This logo was generated using the following font:
 
+- Generator: https://favicon.io/logo-generator/
+
+- Font Color: #009688
 - Font Title: Finger Paint
 - Font Author: Copyright (c) 2011 by Ralph du Carrois, with Reserved Font Name 'Finger Paint'
 - Font Source: http://fonts.gstatic.com/s/fingerpaint/v10/0QInMXVJ-o-oRn_7dron8YWO85bS8ANesw.ttf

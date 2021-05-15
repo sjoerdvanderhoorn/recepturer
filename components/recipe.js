@@ -16,8 +16,16 @@ Vue.component('recipe', {
                             <textarea id="description" v-model="recipe.description" placeholder="Simply the best..." class="materialize-textarea"></textarea>
                         </div>
                         <div class="col s4">
-                            <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Add to this week's menu</a>
-                            <a class="waves-effect waves-light btn"><i class="material-icons left">remove</i>Delete</a>
+                            <a class="dropdown-trigger btn" :href="'#/recipe/' + recipe.id" v-show="!$root.isOnMealplan(recipe)" :data-target="'people_' + recipe.id">Add to meal plan</a>
+                            <ul :id="'people_' + recipe.id" class='dropdown-content'>
+                                <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 1)">One person</a></li>
+                                <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 2)">Two people</a></li>
+                                <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 3)">Three people</a></li>
+                                <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 4)">Four people</a></li>
+                                <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 5)">Five people</a></li>
+                            </ul>
+                            <a :href="'#/recipe/' + recipe.id" v-show="$root.isOnMealplan(recipe)" @click="$root.removeFromMealPlan(recipe)" class="waves-effect waves-light btn">Remove from meal plan</a>
+                            <a href="#/recipes/" @click="removeRecipe()" class="waves-effect waves-light btn red darken-2"><i class="material-icons left">remove</i>Delete</a>
                         </div>
                     </div>
                 </div>
@@ -95,6 +103,12 @@ Vue.component('recipe', {
         },
         strip: function(html) {
             return rcp.strip(html);
+        },
+        removeRecipe: function() {
+            var i = this.$root.recipes.findIndex(r => r.id == this.recipe.id);
+            if (i > -1) {
+                this.$delete(this.$root.recipes, i);
+            }
         }
     }
 });

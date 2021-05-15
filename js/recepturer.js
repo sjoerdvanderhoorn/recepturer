@@ -100,5 +100,9 @@ function Recepturer() {
         return html;
     }
 
+    this.unitofmeasure = function() {
+        return _settings.unitofmeasure.map(unit => unit.name);
+    }
+
 
 };

@@ -24,8 +24,16 @@ Vue.component('recipes', {
                                     <p>{{recipe.description}}</p>
                                 </div>
                                 <div class="card-action">
-                                    <a :href="'#/recipe/' + recipe.id">Edit</a>
-                                    <a href="#">Add to menu</a>
+                                    <a :href="'#/recipe/' + recipe.id">Recipe</a>
+                                    <a class="dropdown-trigger" href="#/recipes/" v-show="!$root.isOnMealplan(recipe)" :data-target="'people_' + recipe.id">Add to meal plan</a>
+                                    <ul :id="'people_' + recipe.id" class='dropdown-content'>
+                                        <li><a href="#/recipes/" @click="$root.addToMealPlan(recipe, 1)">One person</a></li>
+                                        <li><a href="#/recipes/" @click="$root.addToMealPlan(recipe, 2)">Two people</a></li>
+                                        <li><a href="#/recipes/" @click="$root.addToMealPlan(recipe, 3)">Three people</a></li>
+                                        <li><a href="#/recipes/" @click="$root.addToMealPlan(recipe, 4)">Four people</a></li>
+                                        <li><a href="#/recipes/" @click="$root.addToMealPlan(recipe, 5)">Five people</a></li>
+                                    </ul>
+                                    <a href="#/recipes/" v-show="$root.isOnMealplan(recipe)" @click="$root.removeFromMealPlan(recipe)">Remove from meal plan</a>
                                 </div>
                             </div>
                         </div>

@@ -29,3 +29,8 @@ div[contenteditable="true"] .recipe.time {
 div[contenteditable="true"] .recipe.temperature {
     background-color: rgba(228, 228, 228, 0.5);
 }
+
+.strike {
+    text-decoration: line-through;
+    color: rgba(158, 158, 158);
+}
