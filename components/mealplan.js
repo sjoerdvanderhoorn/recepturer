@@ -41,7 +41,6 @@ Vue.component('mealplan', {
     methods: {
         removeFromMealPlan: function(recipe) {
             var i = this.$root.mealplan.findIndex(r => r.id == recipe.id);
-            console.log(i, this.$root.mealplan[i], this.$root.mealplan);
             if (i > -1) {
                 this.$delete(this.$root.mealplan, i);
             }

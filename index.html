@@ -73,7 +73,7 @@
         </main>
 
         <main v-if="page=='shoppinglist'">
-            <shoppinglist :mealplan="mealplan" :shoppinglist="shoppinglist" />
+            <shoppinglist :mealplan="mealplan" :shoppinglist="shoppinglist" :categories="categories" />
         </main>
 
         <main v-if="page=='debug'">
@@ -101,7 +101,7 @@
                     id: "appeltaart",
                     title: "Appeltaart",
                     description: "Lekker lekker",
-                    directions: "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
+                    directions: "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* 123 gram druiven 500 ml melk 1 liter melk 3 theelepels zout 1 kilo peper 2 stuks bieten Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
                 }, {
                     id: "appeltaart-2",
                     title: "Appeltaart 2",
@@ -134,7 +134,26 @@
                     directions: "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
                 }],
                 mealplan: [],
-                shoppinglist: []
+                shoppinglist: [],
+                categories: [{
+                    title: "Groente",
+                    products: ["bieten"]
+                }, {
+                    title: "Fruit",
+                    products: ["appels", "druiven"]
+                }, {
+                    title: "Vleeswaren",
+                    products: []
+                }, {
+                    title: "Blik",
+                    products: ["deeg"]
+                }, {
+                    title: "Zuivel",
+                    products: ["melk"]
+                }, {
+                    title: "Brood",
+                    products: []
+                }]
             },
             mounted: function() {},
             watch: {},

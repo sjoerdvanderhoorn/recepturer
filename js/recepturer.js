@@ -36,14 +36,17 @@ function Recepturer() {
             { name: "teentje", unit: "teen", conversion: 1 },
             { name: "teentjes", unit: "teen", conversion: 1 },
             { name: "stengel", unit: "stengel", conversion: 1 },
-            { name: "stengels", unit: "stengel", conversion: 1 }
+            { name: "stengels", unit: "stengel", conversion: 1 },
+            { name: "pak", unit: "pak", conversion: 1 },
+            { name: "pakken", unit: "pakken", conversion: 1 },
+            { name: "zak", unit: "zak", conversion: 1 },
+            { name: "zakken", unit: "zak", conversion: 1 },
         ],
         temperature: ["c", "f", "graden", "celsius", "fahrenheit", "fahrenheit"],
         time: ["m", "min", "minuut", "minuten", "u", "uur", "uren", "s", "seconde", "seconden", "secondes"]
     };
 
     // Public properties
-
     this.ingredientRegex = new RegExp(`\\b([\\d\\,\\.]+)\\s(${_settings.unitofmeasure.map(unit => unit.name).join("|")})\\s([\\w\\-\\'\\’\\\`]+)`, "gi");
     this.temperatureRegex = new RegExp(`\\b(([\\d])+)\\s(${_settings.temperature.join("|")})\\b`, "gi");
     this.timeRegex = new RegExp(`\\b(([\\d\\,\\.\\-])+)\\s(${_settings.time.join("|")})\\b`, "gi");
@@ -69,6 +72,7 @@ function Recepturer() {
             var existing = all.find(item => item.unit == ingredient.unit && item.product == ingredient.product);
             if (existing) {
                 existing.quantity += ingredient.quantity;
+                existing.checked = existing.checked || ingredient.checked;
             } else {
                 all.push(ingredient);
             }
@@ -103,6 +107,5 @@ function Recepturer() {
     this.unitofmeasure = function() {
         return _settings.unitofmeasure.map(unit => unit.name);
     }
-
 
 };
