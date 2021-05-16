@@ -32,6 +32,11 @@ Vue.component('mealplan', {
                     </div>
                 </div>
             </div>
+            <div class="fixed-action-btn">
+                <a href="#/recipes/" class="btn-floating btn-large red">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
         </div>
     `,
     props: ["mealplan"],

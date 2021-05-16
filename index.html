@@ -20,6 +20,7 @@
     <script type="application/javascript" src="components/recipe.js"></script>
     <script type="application/javascript" src="components/mealplan.js"></script>
     <script type="application/javascript" src="components/shoppinglist.js"></script>
+    <script type="application/javascript" src="components/administration.js"></script>
     <script type="application/javascript" src="components/debug.js"></script>
 </head>
 
@@ -40,13 +41,19 @@
                     <div class="divider"></div>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='recipes' || page=='recipe'}">
-                    <a :href="'#/recipes/'" class="waves-effect waves-teal"><i class="material-icons">blender</i>Recipes</a>
+                    <a :href="'#/recipes/'" class="waves-effect waves-teal"><i class="material-icons">blender</i>Recipes <span class="new badge" data-badge-caption="">{{this.recipes.length}}</span></a>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='mealplan'}">
-                    <a :href="'#/mealplan/'" class="waves-effect waves-teal"><i class="material-icons">menu_book</i>Meal plan</a>
+                    <a :href="'#/mealplan/'" class="waves-effect waves-teal"><i class="material-icons">menu_book</i>Meal plan <span class="new badge" data-badge-caption="meals" v-if="this.mealplan.length > 0">{{this.mealplan.length}}</span></a>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='shoppinglist'}">
                     <a :href="'#/shoppinglist/'" class="waves-effect waves-teal"><i class="material-icons">shopping_cart</i>Shopping list</a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li class="bold sidenav-close" :class="{active: page=='administration'}">
+                    <a :href="'#/administration/'" class="waves-effect waves-teal"><i class="material-icons">tune</i>Administration</a>
                 </li>
                 <li v-if="isDebug()">
                     <div class="divider"></div>
@@ -74,6 +81,10 @@
 
         <main v-if="page=='shoppinglist'">
             <shoppinglist :mealplan="mealplan" :shoppinglist="shoppinglist" :categories="categories" />
+        </main>
+
+        <main v-if="page=='administration'">
+            <administration />
         </main>
 
         <main v-if="page=='debug'">
@@ -179,6 +190,7 @@
 
         function router() {
             var url = document.location.hash.split("/");
+            document.title = `Recepturer`;
             switch (url[1]) {
                 case "recipes":
                     recepturer.page = url[1];
@@ -188,7 +200,7 @@
                     recepturer.page = url[1];
                     recepturer.recipe = recepturer.recipes.find(recipe => recipe.id == url[2]);
                     if (recepturer.recipe) {
-                        document.title = `Recepturer - ${recepturer.recipe.title}`;
+                        document.title = `Recepturer - ${recepturer.recipe.title || "New recipe"}`;
                     } else {
                         document.title = `Recepturer - Recipes`;
                     }
@@ -200,6 +212,9 @@
                 case "shoppinglist":
                     recepturer.page = url[1];
                     document.title = `Recepturer - Shopping list`;
+                    break;
+                case "administration":
+                    recepturer.page = "administration";
                     break;
                 case "debug":
                     recepturer.page = "debug";

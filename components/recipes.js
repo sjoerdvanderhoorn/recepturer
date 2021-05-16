@@ -40,6 +40,11 @@ Vue.component('recipes', {
                     </div>
                 </div>
             </div>
+            <div class="fixed-action-btn">
+                <a href="#/recipe/new" @click="addRecipe()" class="btn-floating btn-large red">
+                    <i class="large material-icons">add</i>
+                </a>
+            </div>
         </div>
     `,
     props: ["recipes"],
@@ -56,6 +61,8 @@ Vue.component('recipes', {
         }
     },
     methods: {
-
+        addRecipe: function() {
+            this.recipes.push({ id: "new", title: "", description: "", directions: "* " });
+        }
     }
 });

@@ -11,7 +11,7 @@ Vue.component('recipe', {
                     <div class="row">
                         <div class="col s8">
                             <h4>Title</h4>
-                            <input id="title" type="text" v-model="recipe.title" placeholder="The greatest dish on earth...!" class="validate">
+                            <input id="title" type="text" v-model="recipe.title" @change="updateId()" placeholder="The greatest dish on earth...!" class="validate">
                             <h4>Description</h4>
                             <textarea id="description" v-model="recipe.description" placeholder="Simply the best..." class="materialize-textarea"></textarea>
                         </div>
@@ -105,11 +105,20 @@ Vue.component('recipe', {
             return rcp.strip(html);
         },
         removeRecipe: function() {
+            // Remove from meal plan
+            if (this.$root.isOnMealplan(this.recipe)) {
+                this.$root.removeFromMealPlan(this.recipe)
+            }
+            // Remove recipe
             var i = this.$root.recipes.findIndex(r => r.id == this.recipe.id);
             if (i > -1) {
                 this.$delete(this.$root.recipes, i);
             }
-        }
+        },
+        updateId: function() {
+            this.recipe.id = this.recipe.title.toLowerCase().replace(/[^(\w|\d)]/g, "-");
+            history.replaceState(undefined, undefined, `#/recipe/${this.recipe.id}`)
+        },
     }
 });
 
