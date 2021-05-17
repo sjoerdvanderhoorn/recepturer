@@ -2,56 +2,37 @@ function Recepturer() {
 
     // Private variables
     var _settings = {
-        unitofmeasure: [
-            { name: "g", unit: "gram", conversion: 1 },
-            { name: "gram", unit: "gram", conversion: 1 },
-            { name: "kg", unit: "gram", conversion: 1000 },
-            { name: "kilo", unit: "gram", conversion: 1000 },
-            { name: "kilogram", unit: "gram", conversion: 1000 },
-            { name: "pond", unit: "gram", conversion: 500 },
-            { name: "ml", unit: "milliliter", conversion: 1 },
-            { name: "milliliter", unit: "milliliter", conversion: 1 },
-            { name: "dl", unit: "milliliter", conversion: 10 },
-            { name: "deciliter", unit: "milliliter", conversion: 10 },
-            { name: "cl", unit: "milliliter", conversion: 100 },
-            { name: "centiliter", unit: "milliliter", conversion: 100 },
-            { name: "l", unit: "milliliter", conversion: 1000 },
-            { name: "liter", unit: "milliliter", conversion: 1000 },
-            { name: "kop", unit: "kop", conversion: 1 },
-            { name: "kopje", unit: "kop", conversion: 1 },
-            { name: "kopjes", unit: "kop", conversion: 1 },
-            { name: "el", unit: "el", conversion: 1 },
-            { name: "eetlepel", unit: "el", conversion: 1 },
-            { name: "eetlepels", unit: "el", conversion: 1 },
-            { name: "tl", unit: "tl", conversion: 1 },
-            { name: "theelepel", unit: "tl", conversion: 1 },
-            { name: "theelepels", unit: "tl", conversion: 1 },
-            { name: "stuk", unit: "stuk", conversion: 1 },
-            { name: "stuks", unit: "stuk", conversion: 1 },
-            { name: "hele", unit: "hele", conversion: 1 },
-            { name: "halve", unit: "hele", conversion: 0.5 },
-            { name: "paar", unit: "paar", conversion: 1 },
-            { name: "teen", unit: "teen", conversion: 1 },
-            { name: "tenen", unit: "teen", conversion: 1 },
-            { name: "teentje", unit: "teen", conversion: 1 },
-            { name: "teentjes", unit: "teen", conversion: 1 },
-            { name: "stengel", unit: "stengel", conversion: 1 },
-            { name: "stengels", unit: "stengel", conversion: 1 },
-            { name: "pak", unit: "pak", conversion: 1 },
-            { name: "pakken", unit: "pakken", conversion: 1 },
-            { name: "zak", unit: "zak", conversion: 1 },
-            { name: "zakken", unit: "zak", conversion: 1 },
-        ],
-        temperature: ["c", "f", "graden", "celsius", "fahrenheit", "fahrenheit"],
-        time: ["m", "min", "minuut", "minuten", "u", "uur", "uren", "s", "seconde", "seconden", "secondes"]
+        unitofmeasure: [],
+        temperature: [],
+        time: []
     };
 
+    // Private methods
+    function _ingredientRegex() {
+        return new RegExp(`\\b([\\d\\,\\.]+)\\s(${_settings.unitofmeasure.map(unit => unit.name).join("|")})\\s([\\w\\-\\'\\’\\\`]+)`, "gi");
+    }
+
+    function _temperatureRegex() {
+        return new RegExp(`\\b(([\\d])+)\\s(${_settings.temperature.map(item => item.name).join("|")})\\b`, "gi");
+    }
+
+    function _timeRegex() {
+        return new RegExp(`\\b(([\\d\\,\\.\\-])+)\\s(${_settings.time.map(item => item.name).join("|")})\\b`, "gi");;
+    }
+
     // Public properties
-    this.ingredientRegex = new RegExp(`\\b([\\d\\,\\.]+)\\s(${_settings.unitofmeasure.map(unit => unit.name).join("|")})\\s([\\w\\-\\'\\’\\\`]+)`, "gi");
-    this.temperatureRegex = new RegExp(`\\b(([\\d])+)\\s(${_settings.temperature.join("|")})\\b`, "gi");
-    this.timeRegex = new RegExp(`\\b(([\\d\\,\\.\\-])+)\\s(${_settings.time.join("|")})\\b`, "gi");
+    this.ingredientRegex = _ingredientRegex();
+    this.temperatureRegex = _temperatureRegex();
+    this.timeRegex = _timeRegex();
 
     // Public methods
+    this.settings = function(settings) {
+        _settings = settings;
+        this.ingredientRegex = _ingredientRegex();
+        this.temperatureRegex = _temperatureRegex();
+        this.timeRegex = _timeRegex();
+    }
+
     this.parse = function(recipe) {
         var ingredients = recipe.match(this.ingredientRegex);
         ingredients = (ingredients || []).map(ingredient => {

@@ -13,7 +13,7 @@ Vue.component('shoppinglist', {
                             <thead>
                                 <tr>
                                     <th colspan="5">
-                                        <h4>{{category.title}}</h4>
+                                        <h4>{{category.name}}</h4>
                                     </th>
                                 </tr>
                             </thead>
@@ -37,7 +37,7 @@ Vue.component('shoppinglist', {
                                         <a href="#/shoppinglist/" @click="changeQuantity(ingredient)" class="waves-effect waves-teal btn-flat"><i class="material-icons">edit</i></a>
                                         <a class="dropdown-trigger waves-effect waves-teal btn-flat" href="#/shoppinglist/" :data-target="'category_' + ingredient.product"><i class="material-icons">category</i></a>
                                         <ul :id="'category_' + ingredient.product" class='dropdown-content'>
-                                            <li v-for="category in categories"><a href="#/shoppinglist/" @click="changeCategory(ingredient, category)">{{category.title}}</a></li>
+                                            <li v-for="category in categories"><a href="#/shoppinglist/" @click="changeCategory(ingredient, category)">{{category.name}}</a></li>
                                             <li class="divider" tabindex="-1"></li>
                                             <li><a href="#/shoppinglist/" @click="newCategory(ingredient)">New category</a></li>
                                         </ul>
@@ -78,21 +78,21 @@ Vue.component('shoppinglist', {
             ingredients = rcp.aggregate(ingredients);
             // Group and by categories
             ingredients = ingredients.map(ingredient => {
-                ingredient.category = (this.categories.find(category => category.products.find(product => product == ingredient.product)) || { title: "Unarranged" }).title;
+                ingredient.category = (this.categories.find(category => category.products.find(product => product.name == ingredient.product)) || { name: "Unarranged" }).name;
                 return ingredient;
             });
             ingredients = ingredients.reduce((output, ingredient) => {
-                var existing = output.find(category => category.title == ingredient.category);
+                var existing = output.find(category => category.name == ingredient.category);
                 if (existing) {
                     existing.ingredients.push(ingredient);
                 } else {
-                    output.push({ title: ingredient.category, ingredients: [ingredient] });
+                    output.push({ name: ingredient.category, ingredients: [ingredient] });
                 }
                 return output;
             }, []);
             ingredients.sort((a, b) => {
-                var c = this.categories.findIndex(category => category.title == a.title);
-                var d = this.categories.findIndex(category => category.title == b.title);
+                var c = this.categories.findIndex(category => category.name == a.name);
+                var d = this.categories.findIndex(category => category.name == b.name);
                 return (c < 0 ? 999 : c) - (d < 0 ? 999 : d);
             });
             return ingredients;
@@ -126,27 +126,27 @@ Vue.component('shoppinglist', {
             }
         },
         removeCategory: function(ingredient) {
-            var category = this.categories.find(category => category.products.find(product => product == ingredient.product));
+            var category = this.categories.find(category => category.products.find(product => product.name == ingredient.product));
             if (category) {
-                var i = category.products.findIndex(product => product == ingredient.product);
+                var i = category.products.findIndex(product => product.name == ingredient.product);
                 this.$delete(category.products, i);
             }
         },
         changeCategory: function(ingredient, category) {
             this.removeCategory(ingredient);
-            category.products.push(ingredient.product);
+            category.products.push({ name: ingredient.product });
         },
         newCategory: function(ingredient) {
             var newCategory = window.prompt(`Enter the name for the new category for ${ingredient.product}.`);
             if (newCategory) {
-                var existing = this.categories.find(category => category.title == newCategory);
+                var existing = this.categories.find(category => category.name == newCategory);
                 if (existing) {
                     this.changeCategory(ingredient, existing);
                 } else {
                     this.removeCategory(ingredient);
                     this.categories.push({
-                        title: newCategory,
-                        products: [ingredient.product]
+                        name: newCategory,
+                        products: [{ name: ingredient.product }]
                     });
                 }
             }

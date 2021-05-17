@@ -84,7 +84,7 @@
         </main>
 
         <main v-if="page=='administration'">
-            <administration />
+            <administration :settings="settings" />
         </main>
 
         <main v-if="page=='debug'">
@@ -95,7 +95,7 @@
 
 
     <script type="application/javascript">
-        var rcp = new Recepturer();
+        var rcp;
 
         // DOM bindings
         var recepturer = new Vue({
@@ -147,27 +147,230 @@
                 mealplan: [],
                 shoppinglist: [],
                 categories: [{
-                    title: "Groente",
-                    products: ["bieten"]
+                    name: "Groente",
+                    products: [{
+                        name: "bieten"
+                    }]
                 }, {
-                    title: "Fruit",
-                    products: ["appels", "druiven"]
+                    name: "Fruit",
+                    products: [{
+                        name: "appels"
+                    }, {
+                        name: "druiven"
+                    }]
                 }, {
-                    title: "Vleeswaren",
+                    name: "Vleeswaren",
                     products: []
                 }, {
-                    title: "Blik",
-                    products: ["deeg"]
+                    name: "Blik",
+                    products: [{
+                        name: "deeg"
+                    }]
                 }, {
-                    title: "Zuivel",
-                    products: ["melk"]
+                    name: "Zuivel",
+                    products: [{
+                        name: "melk"
+                    }]
                 }, {
-                    title: "Brood",
+                    name: "Brood",
                     products: []
-                }]
+                }],
+                settings: {
+                    unitofmeasure: [{
+                        name: "g",
+                        unit: "gram",
+                        conversion: 1
+                    }, {
+                        name: "gram",
+                        unit: "gram",
+                        conversion: 1
+                    }, {
+                        name: "kg",
+                        unit: "gram",
+                        conversion: 1000
+                    }, {
+                        name: "kilo",
+                        unit: "gram",
+                        conversion: 1000
+                    }, {
+                        name: "kilogram",
+                        unit: "gram",
+                        conversion: 1000
+                    }, {
+                        name: "pond",
+                        unit: "gram",
+                        conversion: 500
+                    }, {
+                        name: "ml",
+                        unit: "milliliter",
+                        conversion: 1
+                    }, {
+                        name: "milliliter",
+                        unit: "milliliter",
+                        conversion: 1
+                    }, {
+                        name: "dl",
+                        unit: "milliliter",
+                        conversion: 10
+                    }, {
+                        name: "deciliter",
+                        unit: "milliliter",
+                        conversion: 10
+                    }, {
+                        name: "cl",
+                        unit: "milliliter",
+                        conversion: 100
+                    }, {
+                        name: "centiliter",
+                        unit: "milliliter",
+                        conversion: 100
+                    }, {
+                        name: "l",
+                        unit: "milliliter",
+                        conversion: 1000
+                    }, {
+                        name: "liter",
+                        unit: "milliliter",
+                        conversion: 1000
+                    }, {
+                        name: "kop",
+                        unit: "kop",
+                        conversion: 1
+                    }, {
+                        name: "kopje",
+                        unit: "kop",
+                        conversion: 1
+                    }, {
+                        name: "kopjes",
+                        unit: "kop",
+                        conversion: 1
+                    }, {
+                        name: "el",
+                        unit: "el",
+                        conversion: 1
+                    }, {
+                        name: "eetlepel",
+                        unit: "el",
+                        conversion: 1
+                    }, {
+                        name: "eetlepels",
+                        unit: "el",
+                        conversion: 1
+                    }, {
+                        name: "tl",
+                        unit: "tl",
+                        conversion: 1
+                    }, {
+                        name: "theelepel",
+                        unit: "tl",
+                        conversion: 1
+                    }, {
+                        name: "theelepels",
+                        unit: "tl",
+                        conversion: 1
+                    }, {
+                        name: "stuk",
+                        unit: "stuk",
+                        conversion: 1
+                    }, {
+                        name: "stuks",
+                        unit: "stuk",
+                        conversion: 1
+                    }, {
+                        name: "hele",
+                        unit: "hele",
+                        conversion: 1
+                    }, {
+                        name: "halve",
+                        unit: "hele",
+                        conversion: 0.5
+                    }, {
+                        name: "paar",
+                        unit: "paar",
+                        conversion: 1
+                    }, {
+                        name: "teen",
+                        unit: "teen",
+                        conversion: 1
+                    }, {
+                        name: "tenen",
+                        unit: "teen",
+                        conversion: 1
+                    }, {
+                        name: "teentje",
+                        unit: "teen",
+                        conversion: 1
+                    }, {
+                        name: "teentjes",
+                        unit: "teen",
+                        conversion: 1
+                    }, {
+                        name: "stengel",
+                        unit: "stengel",
+                        conversion: 1
+                    }, {
+                        name: "stengels",
+                        unit: "stengel",
+                        conversion: 1
+                    }, {
+                        name: "pak",
+                        unit: "pak",
+                        conversion: 1
+                    }, {
+                        name: "pakken",
+                        unit: "pakken",
+                        conversion: 1
+                    }, {
+                        name: "zak",
+                        unit: "zak",
+                        conversion: 1
+                    }, {
+                        name: "zakken",
+                        unit: "zak",
+                        conversion: 1
+                    }, ],
+                    temperature: [{
+                        name: "c"
+                    }, {
+                        name: "f"
+                    }, {
+                        name: "graden"
+                    }, {
+                        name: "celsius"
+                    }, {
+                        name: "fahrenheit"
+                    }, {
+                        name: "fahrenheit"
+                    }],
+                    time: [{
+                        name: "m"
+                    }, {
+                        name: "min"
+                    }, {
+                        name: "minuut"
+                    }, {
+                        name: "minuten"
+                    }, {
+                        name: "u"
+                    }, {
+                        name: "uur"
+                    }, {
+                        name: "uren"
+                    }, {
+                        name: "s"
+                    }, {
+                        name: "seconde"
+                    }, {
+                        name: "seconden"
+                    }, {
+                        name: "secondes"
+                    }]
+                }
             },
-            mounted: function() {},
-            watch: {},
+            created: function() {
+                rcp = new Recepturer();
+                rcp.settings(this.settings);
+            },
             methods: {
                 isDebug: function() {
                     return true;
