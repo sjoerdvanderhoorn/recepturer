@@ -21,11 +21,11 @@ Vue.component('administration', {
                         <tbody>
                             <template v-for="(category, index) in $root.categories">
                                 <tr v-if="category.products.length==0">
-                                    <td class="right-align">
-                                        <input type="text" v-model="category.name" />
-                                        <a href="#/administration/" @click="addRow(category.products, {name:null})" class="waves-effect waves-teal btn-flat"><i class="material-icons">add</i></a>
-                                    </td>
                                     <td>
+                                        <input type="text" v-model="category.name" />
+                                    </td>
+                                    <td class="right-align">
+                                        <a href="#/administration/" @click="addRow(category.products, {name:null})" class="waves-effect waves-teal btn-flat"><i class="material-icons">add</i></a>
                                     </td>
                                     <td width="20">
                                         <a href="#/administration/" @click="removeRow($root.categories, index)" class="waves-effect waves-teal btn-flat"><i class="material-icons">clear</i></a>
@@ -35,7 +35,6 @@ Vue.component('administration', {
                                     <tr>
                                         <td class="right-align" style="vertical-align: top;" v-if="index2==0" :rowspan="category.products.length">
                                             <input type="text" v-model="category.name" />
-                                            <a href="#/administration/" @click="addRow(category.products, {name:null})" class="waves-effect waves-teal btn-flat"><i class="material-icons">add</i></a>
                                         </td>
                                         <td style="vertical-align: top;">
                                             <input type="text" v-model="product.name" />
@@ -45,6 +44,13 @@ Vue.component('administration', {
                                         </td>
                                     </tr>
                                 </template>
+                                <tr v-if="category.products.length>0">
+                                    <td colspan="2">
+                                    </td>
+                                    <td width="20">
+                                    <a href="#/administration/" @click="addRow(category.products, {name:null})" class="waves-effect waves-teal btn-flat"><i class="material-icons">add</i></a>
+                                    </td>
+                                </tr>
                             </template>
                         </tbody>
                     </table>
