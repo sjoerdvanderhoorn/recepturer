@@ -59,7 +59,19 @@ Vue.component('recipe', {
             </div>
         </div>
     `,
-    props: ["recipe"],
+    props: {
+        recipe: {
+            type: Object,
+            default: function() {
+                return {
+                    id: null,
+                    title: null,
+                    description: null,
+                    directions: "* "
+                }
+            }
+        }
+    },
     data: function() {
         return {
             formattedText: null,

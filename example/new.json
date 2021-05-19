@@ -1,0 +1,254 @@
+{
+    "recipes": [],
+    "mealplan": [],
+    "shoppinglist": [],
+    "categories": [{
+            "name": "Eggs & Dairy",
+            "products": [
+                { "name": "butter" },
+                { "name": "eggs" },
+                { "name": "milk" }
+            ]
+        },
+        {
+            "name": "Fruits",
+            "products": [
+                { "name": "apple" },
+                { "name": "banana" },
+                { "name": "kiwi" }
+            ]
+        },
+        {
+            "name": "Grains & Nuts",
+            "products": [
+                { "name": "almonds" },
+                { "name": "bread" },
+                { "name": "croissant" }
+            ]
+        },
+        {
+            "name": "Meat & Fish",
+            "products": [
+                { "name": "beef" },
+                { "name": "pork" },
+                { "name": "salmon" }
+            ]
+        },
+        {
+            "name": "Pasta",
+            "products": [
+                { "name": "macaroni" },
+                { "name": "noodles" },
+                { "name": "spaghetti" }
+            ]
+        },
+        {
+            "name": "Rice",
+            "products": [
+                { "name": "basmati rice" },
+                { "name": "jasmine rice" },
+                { "name": "sticky rice" }
+            ]
+        }
+    ],
+    "settings": {
+        "unitofmeasure": [{
+                "name": "g",
+                "unit": "gram",
+                "conversion": 1
+            },
+            {
+                "name": "gram",
+                "unit": "gram",
+                "conversion": 1
+            },
+            {
+                "name": "kg",
+                "unit": "gram",
+                "conversion": 1000
+            },
+            {
+                "name": "kilo",
+                "unit": "gram",
+                "conversion": 1000
+            },
+            {
+                "name": "kilogram",
+                "unit": "gram",
+                "conversion": 1000
+            },
+            {
+                "name": "pond",
+                "unit": "gram",
+                "conversion": 500
+            },
+            {
+                "name": "ml",
+                "unit": "milliliter",
+                "conversion": 1
+            },
+            {
+                "name": "milliliter",
+                "unit": "milliliter",
+                "conversion": 1
+            },
+            {
+                "name": "dl",
+                "unit": "milliliter",
+                "conversion": 10
+            },
+            {
+                "name": "deciliter",
+                "unit": "milliliter",
+                "conversion": 10
+            },
+            {
+                "name": "cl",
+                "unit": "milliliter",
+                "conversion": 100
+            },
+            {
+                "name": "centiliter",
+                "unit": "milliliter",
+                "conversion": 100
+            },
+            {
+                "name": "l",
+                "unit": "milliliter",
+                "conversion": 1000
+            },
+            {
+                "name": "liter",
+                "unit": "milliliter",
+                "conversion": 1000
+            },
+            {
+                "name": "cup",
+                "unit": "cup",
+                "conversion": 1
+            },
+            {
+                "name": "cups",
+                "unit": "cups",
+                "conversion": 1
+            },
+            {
+                "name": "ts",
+                "unit": "ts",
+                "conversion": 1
+            },
+            {
+                "name": "teaspoon",
+                "unit": "ts",
+                "conversion": 1
+            },
+            {
+                "name": "teaspoons",
+                "unit": "ts",
+                "conversion": 1
+            },
+            {
+                "name": "part",
+                "unit": "part",
+                "conversion": 1
+            },
+            {
+                "name": "parts",
+                "unit": "part",
+                "conversion": 1
+            },
+            {
+                "name": "piece",
+                "unit": "part",
+                "conversion": 1
+            },
+            {
+                "name": "pieces",
+                "unit": "part",
+                "conversion": 1
+            },
+            {
+                "name": "whole",
+                "unit": "whole",
+                "conversion": 1
+            },
+            {
+                "name": "half",
+                "unit": "whole",
+                "conversion": 0.5
+            },
+            {
+                "name": "pair",
+                "unit": "pair",
+                "conversion": 1
+            },
+            {
+                "name": "dozen",
+                "unit": "pair",
+                "conversion": 12
+            },
+            {
+                "name": "toe of",
+                "unit": "toe",
+                "conversion": 1
+            },
+            {
+                "name": "toes of",
+                "unit": "toe",
+                "conversion": 1
+            },
+            {
+                "name": "box",
+                "unit": "box",
+                "conversion": 1
+            }
+        ],
+        "temperature": [{
+                "name": "c"
+            },
+            {
+                "name": "f"
+            },
+            {
+                "name": "degrees"
+            },
+            {
+                "name": "celsius"
+            },
+            {
+                "name": "fahrenheit"
+            }
+        ],
+        "time": [{
+                "name": "m"
+            },
+            {
+                "name": "min"
+            },
+            {
+                "name": "minute"
+            },
+            {
+                "name": "minutes"
+            },
+            {
+                "name": "h"
+            },
+            {
+                "name": "hour"
+            },
+            {
+                "name": "hours"
+            },
+            {
+                "name": "s"
+            },
+            {
+                "name": "second"
+            },
+            {
+                "name": "seconds"
+            }
+        ]
+    }
+}
