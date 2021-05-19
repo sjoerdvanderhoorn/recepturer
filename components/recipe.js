@@ -67,11 +67,7 @@ Vue.component('recipe', {
         }
     },
     mounted() {
-        console.log("MOUNTED", this.$props, this.formattedText)
         this.formattedText = this.format(this.$props.recipe ? this.$props.recipe.directions : "");
-    },
-    updated() {
-        console.log("UPDATED", this.$props, this.formattedText)
     },
     computed: {
         ingredients: function() {
