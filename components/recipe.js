@@ -57,28 +57,25 @@ Vue.component('recipe', {
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col s12 offset-m1">
-                    <h4>Debug</h4>
-                    <div>Caret: {{position}}</div>
-                    <pre style="background-color: lightgray;">{{outputText}}</pre>
-                </div>
-            </div>
         </div>
     `,
     props: ["recipe"],
     data: function() {
         return {
-            outputText: this.strip(this.recipe ? this.recipe.directions : ""),
+            formattedText: null,
             position: null
         }
     },
+    mounted() {
+        console.log("MOUNTED", this.$props, this.formattedText)
+        this.formattedText = this.format(this.$props.recipe ? this.$props.recipe.directions : "");
+    },
+    updated() {
+        console.log("UPDATED", this.$props, this.formattedText)
+    },
     computed: {
-        formattedText: function() {
-            return this.format(this.$props.recipe ? this.$props.recipe.directions : "");
-        },
         ingredients: function() {
-            var ingredients = rcp.parse(this.outputText);
+            var ingredients = rcp.parse(this.recipe.directions);
             ingredients = rcp.aggregate(ingredients);
             return ingredients;
         }
@@ -95,8 +92,8 @@ Vue.component('recipe', {
                 Cursor.setCaret(e.target, this.position);
                 e.target.focus();
             }
-            // Store output
-            this.outputText = this.strip(e.target.innerHTML);
+            // Store processed data
+            this.recipe.directions = this.strip(e.target.innerHTML);
         },
         format: function(html) {
             return rcp.format(html);
