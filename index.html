@@ -69,17 +69,21 @@
                     <a :href="'#/shoppinglist/'" class="waves-effect waves-teal"><i class="material-icons">shopping_cart</i>Shopping list</a>
                 </li>
                 <li>
-                    <div class="divider"></div>
-                </li>
-                <li class="bold sidenav-close">
-                    <a @click="dropboxSave(save())" class="waves-effect waves-teal"><i class="material-icons">save_alt</i>Save</a>
-                    <a @click="dropboxLogout()" class="waves-effect waves-teal"><i class="material-icons">logout</i>Close</a>
-                </li>
-                <li>
-                    <div class="divider"></div>
+                    <a class="subheader">Configuration</a>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='administration'}">
                     <a :href="'#/administration/'" class="waves-effect waves-teal"><i class="material-icons">tune</i>Administration</a>
+                </li>
+                <li>
+                    <a class="subheader">{{ storage.location=='dropbox' ? "Dropbox" : "Storage" }}</a>
+                </li>
+                <li class="bold sidenav-close" v-if="storage.location=='dropbox'">
+                    <a @click="dropboxSave()" v-if="!storage.outstandingChanges" class="waves-effect waves-teal grey-text"><i class="material-icons">published_with_changes</i>Up to date</a>
+                    <a @click="dropboxSave()" v-if="storage.outstandingChanges" class="waves-effect waves-teal"><i class="material-icons">hourglass_empty</i>Unsaved changes</a>
+                    <a @click="dropboxLogout()" class="waves-effect waves-teal"><i class="material-icons">logout</i>Log out</a>
+                </li>
+                <li class="bold sidenav-close" v-if="storage.location=='file'">
+                    <a @click="dropboxLogout()" class="waves-effect waves-teal"><i class="material-icons">logout</i>Exit</a>
                 </li>
                 <li v-if="isDebug()">
                     <div class="divider"></div>
@@ -142,11 +146,13 @@
                     unitofmeasure: [],
                     temperature: [],
                     time: []
+                },
+                storage: {
+                    location: null,
+                    outstandingChanges: false
                 }
             },
             mounted() {
-                //this.loadNew();
-                //this.dropboxConnect();
                 var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
                 if (dropboxAuth) {
                     this.dropboxLoad();
@@ -156,7 +162,47 @@
                 rcp = new Recepturer();
                 rcp.settings(this.settings);
             },
+            watch: {
+                recipes: {
+                    handler: function() {
+                        this.autoSave();
+                    },
+                    deep: true
+                },
+                mealplan: {
+                    handler: function() {
+                        this.autoSave();
+                    },
+                    deep: true
+                },
+                shoppinglist: {
+                    handler: function() {
+                        this.autoSave();
+                    },
+                    deep: true
+                },
+                categories: {
+                    handler: function() {
+                        this.autoSave();
+                    },
+                    deep: true
+                },
+                settings: {
+                    handler: function() {
+                        this.autoSave();
+                    },
+                    deep: true
+                }
+            },
             methods: {
+                autoSave: function() {
+                    // Delay saving until no changes have been made for 5 seconds
+                    recepturer.storage.outstandingChanges = true;
+                    clearTimeout(this.autoSaveTimeout);
+                    this.autoSaveTimeout = setTimeout(function() {
+                        recepturer.dropboxSave();
+                    }, 5 * 1000);
+                },
                 dropboxConnect: function() {
                     var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
                     if (!(dropboxAuth || {}).access_token) {
@@ -165,7 +211,7 @@
                         });
                         var authUrl = dbx.auth.getAuthenticationUrl('http://localhost:8080/')
                             .then(function(authUrl) {
-                                // Open URL in new window for authentication
+                                // Open URL for authentication
                                 document.location = authUrl;
                             });
                     }
@@ -184,6 +230,7 @@
                                 })
                                 .then(file => file.result.fileBlob.text())
                                 .then(function(data) {
+                                    recepturer.storage.location = "dropbox";
                                     recepturer.load(JSON.parse(data));
                                 })
                                 .catch(function(error) {
@@ -194,7 +241,8 @@
                             console.error("Error opening file from Dropbox:", error);
                         });
                 },
-                dropboxSave: function(data) {
+                dropboxSave: function() {
+                    var data = recepturer.save();
                     var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
                     var dbx = new Dropbox.Dropbox({
                         accessToken: dropboxAuth.access_token
@@ -208,8 +256,7 @@
                             }
                         })
                         .then(function(response) {
-                            console.log("SAVE FILE")
-                            console.log(response);
+                            recepturer.storage.outstandingChanges = false;
                         })
                         .catch(function(error) {
                             console.error("Error saving file to Dropbox:", error);
@@ -221,6 +268,7 @@
                     document.location.reload();
                 },
                 loadNew: function() {
+                    recepturer.storage.location = "file";
                     fetch("example/new.json")
                         .then(function(response) {
                             return response.json();
@@ -229,6 +277,7 @@
                         });
                 },
                 loadDemo: function() {
+                    recepturer.storage.location = "file";
                     fetch("example/demo.json")
                         .then(function(response) {
                             return response.json();
@@ -243,7 +292,9 @@
                     recepturer.categories = data.categories;
                     recepturer.settings = data.settings;
                     rcp.settings(recepturer.settings);
-                    recepturer.page = "recipes";
+                    if (recepturer.page == "start") {
+                        recepturer.page = "recipes";
+                    }
                 },
                 save: function() {
                     var data = {
@@ -273,8 +324,6 @@
                 }
             }
         });
-
-        //recepturer.load();
 
         function router() {
             var url = document.location.hash.split("/");
