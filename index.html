@@ -13,6 +13,7 @@
     <link href="resources/googlefonts/materialicons.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/materialize/css/materialize.min.css">
     <script type="application/javascript" src="resources/materialize/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/dropbox@9.8.0/dist/Dropbox-sdk.min.js"></script>
     <!-- Recepturer -->
     <link rel="stylesheet" href="css/style.css" />
     <script type="application/javascript" src="js/recepturer.js"></script>
@@ -25,10 +26,28 @@
 </head>
 
 <body>
-    <div id="recepturer" v-if="settings.temperature.length > 0">
+    <div id="recepturer">
+
+        <!-- Start -->
+        <div v-if="page=='start'" class="container" style="max-width: 600px;">
+            <h1 class="header">Recepturer</h1>
+            <div class="divider"></div>
+            <div class="section">
+                <h4 class="light">Manage all your recipes in one app.</h4>
+                <p style="text-align: justify;">
+                    Include the quantities needed for each ingredient as you author your recipe, and Recepturer automatically aggregates everything you need. Adding a recipe to your meal plan transfers over the required ingredients to a shopping list. Easily change quantities
+                    or check off items you already have in stock. Add extra items such as your weekly batch of chocolate chip cookies and arrange the product over different categories such as vegetables, dairy, condiments, grains, and fruits and order
+                    them according to the layout of your favorite local supermarket. Everything is self guided. There is no need to worry about maintaining database records or data entry you don't need.
+                </p>
+            </div>
+            <div class="section center-align">
+                <button class="btn-large waves-effect waves-light" v-on:click="dropboxConnect()"><i class="material-icons left">import_contacts</i>Open with Dropbox</button>
+                <button class="btn-large waves-effect waves-light teal lighten-3" v-on:click="loadDemo()"><i class="material-icons left">science</i>Demo</button>
+            </div>
+        </div>
 
         <!-- App -->
-        <header v-cloak>
+        <header v-cloak v-if="page!='start'">
             <a data-target="nav-mobile" class="top-nav sidenav-trigger btn-floating btn-large teal lighten-3 waves-effect waves-light hide-on-large-only" style="margin: 15px;">
                 <i class="material-icons">menu</i>
             </a>
@@ -48,6 +67,13 @@
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='shoppinglist'}">
                     <a :href="'#/shoppinglist/'" class="waves-effect waves-teal"><i class="material-icons">shopping_cart</i>Shopping list</a>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
+                <li class="bold sidenav-close">
+                    <a @click="dropboxSave(save())" class="waves-effect waves-teal"><i class="material-icons">save_alt</i>Save</a>
+                    <a @click="dropboxLogout()" class="waves-effect waves-teal"><i class="material-icons">logout</i>Close</a>
                 </li>
                 <li>
                     <div class="divider"></div>
@@ -119,25 +145,115 @@
                 }
             },
             mounted() {
-                this.load();
+                //this.loadNew();
+                //this.dropboxConnect();
+                var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
+                if (dropboxAuth) {
+                    this.dropboxLoad();
+                }
             },
             created: function() {
                 rcp = new Recepturer();
                 rcp.settings(this.settings);
             },
             methods: {
-                load: function() {
+                dropboxConnect: function() {
+                    var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
+                    if (!(dropboxAuth || {}).access_token) {
+                        var dbx = new Dropbox.Dropbox({
+                            clientId: 'ssfj3kbdixnrev9'
+                        });
+                        var authUrl = dbx.auth.getAuthenticationUrl('http://localhost:8080/')
+                            .then(function(authUrl) {
+                                // Open URL in new window for authentication
+                                document.location = authUrl;
+                            });
+                    }
+                },
+                dropboxLoad: function() {
+                    var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
+                    var dbx = new Dropbox.Dropbox({
+                        accessToken: dropboxAuth.access_token
+                    });
+                    dbx.filesListFolder({
+                            path: ''
+                        })
+                        .then(function(response) {
+                            dbx.filesDownload({
+                                    path: response.result.entries.find(file => file.name == "recepturer.json").path_display
+                                })
+                                .then(file => file.result.fileBlob.text())
+                                .then(function(data) {
+                                    recepturer.load(JSON.parse(data));
+                                })
+                                .catch(function(error) {
+                                    console.error("Error processing file from Dropbox:", error);
+                                });
+                        })
+                        .catch(function(error) {
+                            console.error("Error opening file from Dropbox:", error);
+                        });
+                },
+                dropboxSave: function(data) {
+                    var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
+                    var dbx = new Dropbox.Dropbox({
+                        accessToken: dropboxAuth.access_token
+                    });
+                    // Save file
+                    dbx.filesUpload({
+                            path: '/recepturer.json',
+                            contents: JSON.stringify(data),
+                            mode: {
+                                ".tag": "overwrite"
+                            }
+                        })
+                        .then(function(response) {
+                            console.log("SAVE FILE")
+                            console.log(response);
+                        })
+                        .catch(function(error) {
+                            console.error("Error saving file to Dropbox:", error);
+                        });
+                },
+                dropboxLogout: function() {
+                    localStorage.removeItem("dropboxAuth");
+                    document.location.href = "#/";
+                    document.location.reload();
+                },
+                loadNew: function() {
                     fetch("example/new.json")
                         .then(function(response) {
                             return response.json();
                         }).then(function(data) {
-                            recepturer.recipes = data.recipes;
-                            recepturer.mealplan = data.mealplan;
-                            recepturer.shoppinglist = data.shoppinglist;
-                            recepturer.categories = data.categories;
-                            recepturer.settings = data.settings;
-                            router();
+                            recepturer.load(data);
                         });
+                },
+                loadDemo: function() {
+                    fetch("example/demo.json")
+                        .then(function(response) {
+                            return response.json();
+                        }).then(function(data) {
+                            recepturer.load(data);
+                        });
+                },
+                load: function(data) {
+                    recepturer.recipes = data.recipes;
+                    recepturer.mealplan = data.mealplan;
+                    recepturer.shoppinglist = data.shoppinglist;
+                    recepturer.categories = data.categories;
+                    recepturer.settings = data.settings;
+                    rcp.settings(recepturer.settings);
+                    recepturer.page = "recipes";
+                },
+                save: function() {
+                    var data = {
+                        recipes: this.recipes,
+                        mealplan: this.mealplan,
+                        shoppinglist: this.shoppinglist,
+                        categories: this.categories,
+                        settings: this.settings
+                    }
+                    return data;
                 },
                 isDebug: function() {
                     return true;
@@ -193,9 +309,19 @@
                     break;
                 default:
                     // Unknown link, do nothing
-                    recepturer.page = "start";
+                    if (recepturer.settings.temperature.length == 0) {
+                        recepturer.page = "start";
+                    } else {
+                        recepturer.page = "recipes";
+                    }
                     document.title = `Recepturer`;
                     break;
+            }
+            if (document.location.hash.includes("access_token=") && document.location.hash.includes("account_id=")) {
+                var dropboxAuth = Object.fromEntries(document.location.hash.substr(1).split("&").map(item => item.split("=")));
+                localStorage.setItem("dropboxAuth", JSON.stringify(dropboxAuth));
+                document.location.href = "#/";
+                document.location.reload();
             }
             window.setTimeout(function() {
                 M.AutoInit();
