@@ -81,6 +81,13 @@ Vue.component('recipe', {
     mounted() {
         this.formattedText = this.format(this.$props.recipe ? this.$props.recipe.directions : "");
     },
+    watch: {
+        recipe: function(val, valOld) {
+            if (!valOld.id && val.id) {
+                this.formattedText = this.format(this.$props.recipe ? this.$props.recipe.directions : "");
+            }
+        }
+    },
     computed: {
         ingredients: function() {
             var ingredients = rcp.parse(this.recipe.directions);
