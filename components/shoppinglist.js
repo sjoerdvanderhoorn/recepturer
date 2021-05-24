@@ -68,8 +68,14 @@ Vue.component('shoppinglist', {
     },
     computed: {
         arrangement: function() {
+            // Calculate exact quantity based on "recipe for" and people
+            var ingredients = this.mealplan.map(recipe => {
+                return rcp.parse(recipe.directions).map(ingredient => {
+                    ingredient.quantity = ingredient.quantity / recipe.for * recipe.people;
+                    return ingredient;
+                });
+            });
             // Combine ingredients from mealplan with (ad hoc) shoppinglist
-            var ingredients = this.mealplan.map(recipe => rcp.parse(recipe.directions));
             ingredients = ingredients.flat().map(ingredient => {
                 ingredient.checked = false;
                 return ingredient;

@@ -39,6 +39,14 @@ Vue.component('recipe', {
                         </div>
                         <div class="col s4">
                             <h4>Ingredients</h4>
+                            <select  v-model="recipe.for">
+                                <option value="" disabled selected>Select how many people this recipe is for</option>
+                                <option value="1">One person</option>
+                                <option value="2">Two people</option>
+                                <option value="3">Three people</option>
+                                <option value="4">Four people</option>
+                                <option value="5">Five people</option>
+                            </select>
                             <table class="striped">
                                 <tbody>
                                     <tr v-for="ingredient in ingredients">
@@ -67,6 +75,7 @@ Vue.component('recipe', {
                     id: null,
                     title: null,
                     description: null,
+                    people: 2,
                     directions: "* "
                 }
             }
