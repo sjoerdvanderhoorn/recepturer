@@ -6,10 +6,15 @@ Vue.component('shoppinglist', {
                     <h1 class="header">Shopping list</h1>
                 </div>
             </div>
+            <div class="row" v-if="$root.mealplan.length > 0 || shoppinglist.length > 0">
+                <div class="col s12 offset-m1">
+                    <a href="#/shoppinglist/" @click="$root.clearMealPlanAndShoppingList()" class="waves-effect waves-light btn red darken-2"><i class="material-icons left">cleaning_services</i>Empty</a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col s12 offset-m1">
                     <table class="striped">
-                        <template v-for="category in arrangement">
+                        <template v-for="category in $root.shoppinglistArranged">
                             <thead>
                                 <tr>
                                     <th colspan="5">
@@ -33,9 +38,9 @@ Vue.component('shoppinglist', {
                                         {{ingredient.product}}
                                     </td>
                                     <td width="200" class="right-align">
-                                        <a href="#/shoppinglist/" @click="removeIngredient(ingredient)" v-if="isAdhocIngredient(ingredient)" class="waves-effect waves-teal btn-flat"><i class="material-icons">undo</i></a>
-                                        <a href="#/shoppinglist/" @click="changeQuantity(ingredient)" class="waves-effect waves-teal btn-flat"><i class="material-icons">edit</i></a>
-                                        <a class="dropdown-trigger waves-effect waves-teal btn-flat" href="#/shoppinglist/" :data-target="'category_' + ingredient.product"><i class="material-icons">category</i></a>
+                                        <a href="#/shoppinglist/" @click="removeIngredient(ingredient)" title="Remove ingredient" v-if="isAdhocIngredient(ingredient)" class="waves-effect waves-teal btn-flat"><i class="material-icons">undo</i></a>
+                                        <a href="#/shoppinglist/" @click="changeQuantity(ingredient)" title="Change quantity" class="waves-effect waves-teal btn-flat"><i class="material-icons">edit</i></a>
+                                        <a href="#/shoppinglist/" title="Categorize" class="dropdown-trigger waves-effect waves-teal btn-flat" :data-target="'category_' + ingredient.product"><i class="material-icons">category</i></a>
                                         <ul :id="'category_' + ingredient.product" class='dropdown-content'>
                                             <li v-for="category in categories"><a href="#/shoppinglist/" @click="changeCategory(ingredient, category)">{{category.name}}</a></li>
                                             <li class="divider" tabindex="-1"></li>
@@ -67,42 +72,6 @@ Vue.component('shoppinglist', {
         M.AutoInit();
     },
     computed: {
-        arrangement: function() {
-            // Calculate exact quantity based on "recipe for" and people
-            var ingredients = this.mealplan.map(recipe => {
-                return rcp.parse(recipe.directions).map(ingredient => {
-                    ingredient.quantity = ingredient.quantity / recipe.for * recipe.people;
-                    return ingredient;
-                });
-            });
-            // Combine ingredients from mealplan with (ad hoc) shoppinglist
-            ingredients = ingredients.flat().map(ingredient => {
-                ingredient.checked = false;
-                return ingredient;
-            })
-            ingredients = ingredients.concat(this.shoppinglist);
-            ingredients = rcp.aggregate(ingredients);
-            // Group and by categories
-            ingredients = ingredients.map(ingredient => {
-                ingredient.category = (this.categories.find(category => category.products.find(product => product.name == ingredient.product)) || { name: "Unarranged" }).name;
-                return ingredient;
-            });
-            ingredients = ingredients.reduce((output, ingredient) => {
-                var existing = output.find(category => category.name == ingredient.category);
-                if (existing) {
-                    existing.ingredients.push(ingredient);
-                } else {
-                    output.push({ name: ingredient.category, ingredients: [ingredient] });
-                }
-                return output;
-            }, []);
-            ingredients.sort((a, b) => {
-                var c = this.categories.findIndex(category => category.name == a.name);
-                var d = this.categories.findIndex(category => category.name == b.name);
-                return (c < 0 ? 999 : c) - (d < 0 ? 999 : d);
-            });
-            return ingredients;
-        },
         unitofmeasure: function() {
             return rcp.unitofmeasure();
         }

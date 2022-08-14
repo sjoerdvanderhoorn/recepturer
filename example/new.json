@@ -201,6 +201,16 @@
                 "name": "box",
                 "unit": "box",
                 "conversion": 1
+            },
+            {
+                "name": "bottle",
+                "unit": "bottle",
+                "conversion": 1
+            },
+            {
+                "name": "bottles",
+                "unit": "bottle",
+                "conversion": 1
             }
         ],
         "temperature": [{

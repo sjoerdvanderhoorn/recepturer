@@ -30,43 +30,85 @@
 
         <!-- Start -->
         <div v-if="page=='start'" class="container" style="max-width: 600px;">
-            <h1 class="header">Recepturer</h1>
+            <h1 class="header">
+                <img src="resources/faviconio-logo/recepturer.svg" width="80%" title="Recepturer" />
+            </h1>
             <div class="divider"></div>
             <div class="section">
                 <h4 class="light">Manage all your recipes in one app.</h4>
                 <p style="text-align: justify;">
-                    Include the quantities needed for each ingredient as you author your recipe, and Recepturer automatically aggregates everything you need. Adding a recipe to your meal plan transfers over the required ingredients to a shopping list. Easily change quantities
-                    or check off items you already have in stock. Add extra items such as your weekly batch of chocolate chip cookies and arrange the product over different categories such as vegetables, dairy, condiments, grains, and fruits and order
-                    them according to the layout of your favorite local supermarket. Everything is self guided. There is no need to worry about maintaining database records or data entry you don't need.
+                    Let Recepturer help you organize all your recipes in one place. You can add, edit and delete recipes, and create meal plans. Simply type your recipe and all ingredients will be listed as you go.
+                </p>
+                <p style="text-align: justify; ">
+                    Set up your shopping list and tick off all the ingredients you need. Easily order your shopping list according to your favorite groceries store.
                 </p>
             </div>
             <div class="section center-align">
-                <button class="btn-large waves-effect waves-light" v-on:click="dropboxConnect()"><i class="material-icons left">import_contacts</i>Open with Dropbox</button>
-                <button class="btn-large waves-effect waves-light teal lighten-3" v-on:click="loadDemo()"><i class="material-icons left">science</i>Demo</button>
+                <button class="btn-large waves-effect waves-light " v-on:click="dropboxConnect() "><i class="material-icons left ">import_contacts</i>Open with Dropbox</button>
+                <button class="btn-large waves-effect waves-light teal lighten-3 " v-on:click="loadDemo() "><i class="material-icons left ">science</i>Demo</button>
+            </div>
+            <div class="section">
+                <p>
+                    Recepturer is a <a href="https://github.com/sjoerdvanderhoorn/recepturer" target="_blank">free and open source</a> application. All data is stored in your own Dropbox account.
+                </p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h4 class="header">Features</h4>
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">blender</i>Recipe authoring</div>
+                        <div class="collapsible-body">
+                            <span>Easily type up your recipes. Recepturer will automatically distill all ingredients so they can be added to your shopping list.</span>
+                            <p>
+                                <img class="materialboxed" width="100%" src="screenshots/recipe.png">
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">menu_book</i>Create a meal plan</div>
+                        <div class="collapsible-body">
+                            <span>Add or remove recipes to create a meal plan. Ingredients are automatically added to your shopping list as you go.</span>
+                            <p>
+                                <img class="materialboxed" width="100%" src="screenshots/mealplan.png">
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping list</div>
+                        <div class="collapsible-body">
+                            <span>All ingedients from your meal plan are added to the shopping list. Tell Recepturer what type of product each ingredient is and it will arrange them in the right order for you to pick them up at your grocies store.</span>
+                            <p>
+                                <img class="materialboxed" width="100%" src="screenshots/shoppinglist.png">
+                            </p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
 
         <!-- App -->
-        <header v-cloak v-if="page!='start'">
-            <a data-target="nav-mobile" class="top-nav sidenav-trigger btn-floating btn-large teal lighten-3 waves-effect waves-light hide-on-large-only" style="margin: 15px;">
-                <i class="material-icons">menu</i>
+        <header v-cloak v-if="page!='start' ">
+            <a data-target="nav-mobile " class="top-nav sidenav-trigger btn-floating btn-large teal lighten-3 waves-effect waves-light hide-on-large-only " style="margin: 15px; ">
+                <i class="material-icons ">menu</i>
             </a>
-            <ul id="nav-mobile" class="sidenav sidenav-fixed">
-                <li class="center-align" style="padding-top: 20px;">
+            <ul id="nav-mobile " class="sidenav sidenav-fixed ">
+                <li class="center-align " style="padding-top: 20px; ">
                     <img src="resources/faviconio-logo/r.svg" />
-                    <img src="resources/faviconio-logo/recepturer.svg" width="80%" />
+                    <img src="resources/faviconio-logo/recepturer.svg" width="80% " />
                 </li>
                 <li>
-                    <div class="divider"></div>
+                    <div class="divider "></div>
                 </li>
-                <li class="bold sidenav-close" :class="{active: page=='recipes' || page=='recipe'}">
-                    <a :href="'#/recipes/'" class="waves-effect waves-teal"><i class="material-icons">blender</i>Recipes <span class="new badge" data-badge-caption="">{{this.recipes.length}}</span></a>
+                <li class="bold sidenav-close " :class="{active: page=='recipes' || page=='recipe' } ">
+                    <a :href=" '#/recipes/' " class="waves-effect waves-teal "><i class="material-icons ">blender</i>Recipes <span class="new badge " data-badge-caption=" ">{{this.recipes.length}}</span></a>
                 </li>
-                <li class="bold sidenav-close" :class="{active: page=='mealplan'}">
-                    <a :href="'#/mealplan/'" class="waves-effect waves-teal"><i class="material-icons">menu_book</i>Meal plan <span class="new badge" data-badge-caption="meals" v-if="this.mealplan.length > 0">{{this.mealplan.length}}</span></a>
+                <li class="bold sidenav-close " :class="{active: page=='mealplan' } ">
+                    <a :href=" '#/mealplan/' " class="waves-effect waves-teal "><i class="material-icons ">menu_book</i>Meal plan <span class="new badge " data-badge-caption=" " v-if="this.mealplan.length> 0">{{this.mealplan.length}}</span>
+                    </a>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='shoppinglist'}">
-                    <a :href="'#/shoppinglist/'" class="waves-effect waves-teal"><i class="material-icons">shopping_cart</i>Shopping list</a>
+                    <a :href="'#/shoppinglist/'" class="waves-effect waves-teal"><i class="material-icons">shopping_cart</i>Shopping list <span class="new badge" data-badge-caption="" v-if="shoppinglistArranged.length > 0">{{ shoppinglistArranged.reduce(function(total, category) {return total + category.ingredients.filter(ingredient => ingredient.checked).length;}, 0) }} / {{ shoppinglistArranged.reduce(function(total, category) {return total + category.ingredients.length;}, 0) }}</span></a>
                 </li>
                 <li>
                     <a class="subheader">Configuration</a>
@@ -152,6 +194,49 @@
                     outstandingChanges: false
                 }
             },
+            computed: {
+                shoppinglistArranged: function() {
+                    // Calculate exact quantity based on "recipe for" and people
+                    var ingredients = this.mealplan.map(recipe => {
+                        return rcp.parse(recipe.directions).map(ingredient => {
+                            ingredient.quantity = ingredient.quantity / recipe.for * recipe.people;
+                            return ingredient;
+                        });
+                    });
+                    // Combine ingredients from mealplan with (ad hoc) shoppinglist
+                    ingredients = ingredients.flat().map(ingredient => {
+                        ingredient.checked = false;
+                        return ingredient;
+                    })
+                    ingredients = ingredients.concat(this.shoppinglist);
+                    ingredients = rcp.aggregate(ingredients);
+                    // Group and by categories
+                    ingredients = ingredients.map(ingredient => {
+                        ingredient.category = (this.categories.find(category => category.products.find(product => product.name == ingredient.product)) || {
+                            name: "Unarranged"
+                        }).name;
+                        return ingredient;
+                    });
+                    ingredients = ingredients.reduce((output, ingredient) => {
+                        var existing = output.find(category => category.name == ingredient.category);
+                        if (existing) {
+                            existing.ingredients.push(ingredient);
+                        } else {
+                            output.push({
+                                name: ingredient.category,
+                                ingredients: [ingredient]
+                            });
+                        }
+                        return output;
+                    }, []);
+                    ingredients.sort((a, b) => {
+                        var c = this.categories.findIndex(category => category.name == a.name);
+                        var d = this.categories.findIndex(category => category.name == b.name);
+                        return (c < 0 ? 999 : c) - (d < 0 ? 999 : d);
+                    });
+                    return ingredients;
+                }
+            },
             mounted() {
                 var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
                 if (dropboxAuth) {
@@ -196,12 +281,12 @@
             },
             methods: {
                 autoSave: function() {
-                    // Delay saving until no changes have been made for 5 seconds
+                    // Delay saving until no changes have been made for 1 seconds
                     recepturer.storage.outstandingChanges = true;
                     clearTimeout(this.autoSaveTimeout);
                     this.autoSaveTimeout = setTimeout(function() {
                         recepturer.dropboxSave();
-                    }, 5 * 1000);
+                    }, 1 * 1000);
                 },
                 dropboxConnect: function() {
                     var dropboxAuth = JSON.parse(window.localStorage.getItem("dropboxAuth"));
@@ -308,7 +393,17 @@
                     return data;
                 },
                 isDebug: function() {
-                    return true;
+                    if (window.sessionStorage.getItem("isDebug") != "on") {
+                        // This function will detect whether Dev Tools are on, and if so, enable debug mode for the session
+                        var t1 = new Date();
+                        debugger;
+                        if (new Date() - t1 > 200) {
+                            window.sessionStorage.setItem("isDebug", "on");
+                        } else {
+                            window.sessionStorage.setItem("isDebug", "off");
+                        }
+                    }
+                    return (window.sessionStorage.getItem("isDebug") == "on" ? true : false);
                 },
                 isOnMealplan: function(recipe) {
                     return this.$root.mealplan.some(r => r.id == recipe.id);
@@ -321,6 +416,12 @@
                     var i = this.$root.mealplan.findIndex(r => r.id == recipe.id);
                     if (i > -1) {
                         this.$delete(this.$root.mealplan, i);
+                    }
+                },
+                clearMealPlanAndShoppingList: function() {
+                    if (window.confirm("Are you sure you want to clear the Meal plan and Shopping list?")) {
+                        this.$root.mealplan = [];
+                        this.$root.shoppinglist = [];
                     }
                 }
             }
@@ -379,6 +480,12 @@
         }
         window.addEventListener("hashchange", router);
         router();
+
+        window.onbeforeunload = function() {
+            if (recepturer.storage.outstandingChanges) {
+                return "You have unsaved changes. Are you sure you want to leave?";
+            }
+        }
     </script>
 
     <!-- Dependencies -->

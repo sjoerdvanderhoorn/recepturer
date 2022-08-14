@@ -1,45 +1,27 @@
 {
     "recipes": [{
-            "id": "appeltaart",
-            "title": "Appeltaart",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* 123 gram druiven 500 ml melk 1 liter melk 3 theelepels zout 1 kilo peper 2 stuks bieten Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
+            "id": "mac---cheese",
+            "title": "Mac & Cheese",
+            "description": "Home made alternative to boxed mac and cheese.",
+            "directions": "\n* Boil 600 gram macaroni\n* Melt 20 gram butter&nbsp;in a saucepan over medium heat and add 5 gram flour, 2 gram peper, and 2 gram salt\n* Add 200 gram cheese&nbsp;to the macaroni\n* Mix",
+            "for": "4",
+            "people": 2
         },
         {
-            "id": "appeltaart-2",
-            "title": "Appeltaart 2",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
+            "id": "lasagna",
+            "title": "Lasagna",
+            "description": "Family favorite.",
+            "directions": "\n* Bake 500 gram ground-beef\n* Add 1 cup water\n* Add 2 teaspoons garlic-powder\n* Add 3 gram salt&nbsp;and 2 gram peper\n* Add 1 liter sauce\n* Take 1 box lasagna-noodles&nbsp;and lay it out in a bake tray, cover it with sauce, and repeat\n* Add 200 gram cheese&nbsp;to top it up\n* Put in over for 40 minutes",
+            "for": "4",
+            "people": 2
         },
         {
-            "id": "appeltaart-17",
-            "title": "Appeltaart 17",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
-        },
-        {
-            "id": "appeltaart-18",
-            "title": "Appeltaart 18",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
-        },
-        {
-            "id": "appeltaart-19",
-            "title": "Appeltaart 19",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
-        },
-        {
-            "id": "bananentaart",
-            "title": "bananentaart",
-            "description": "Iets met appels en weet ik veel wat.",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
-        },
-        {
-            "id": "appeltaart-21",
-            "title": "Appeltaart 21",
-            "description": "Lekker lekker",
-            "directions": "* Schil 500 gram appels zonder schil\n* Doe er 50 gram deeg bij\n* Zet het geheel 30 minuten in de oven op 200 graden\n* Doe er nog 12 gram appels bij"
+            "id": "spaghetti-bolognese",
+            "title": "Spaghetti bolognese",
+            "description": "Italian's best.",
+            "directions": "\n* Boil 800 gram spaghetti\n* Bake 400 gram ground-beef\n* Add 300 gram sauce\n* Mix it up and serve",
+            "for": "4",
+            "people": 2
         }
     ],
     "mealplan": [
@@ -49,43 +31,109 @@
 
     ],
     "categories": [{
-            "name": "Groente",
+            "name": "Eggs & Dairy",
             "products": [{
-                "name": "bieten"
-            }]
-        },
-        {
-            "name": "Fruit",
-            "products": [{
-                    "name": "appels"
+                    "name": "eggs"
                 },
                 {
-                    "name": "druiven"
+                    "name": "milk"
+                },
+                {
+                    "name": "butter"
+                },
+                {
+                    "name": "cheese"
                 }
             ]
         },
         {
-            "name": "Vleeswaren",
-            "products": [
-
+            "name": "Fruits",
+            "products": [{
+                    "name": "apple"
+                },
+                {
+                    "name": "banana"
+                },
+                {
+                    "name": "kiwi"
+                }
             ]
         },
         {
-            "name": "Blik",
+            "name": "Grains & Nuts",
             "products": [{
-                "name": "deeg"
-            }]
+                    "name": "almonds"
+                },
+                {
+                    "name": "bread"
+                },
+                {
+                    "name": "croissant"
+                },
+                {
+                    "name": "flour"
+                }
+            ]
         },
         {
-            "name": "Zuivel",
+            "name": "Meat & Fish",
             "products": [{
-                "name": "melk"
-            }]
+                    "name": "beef"
+                },
+                {
+                    "name": "pork"
+                },
+                {
+                    "name": "salmon"
+                },
+                {
+                    "name": "ground-beef"
+                }
+            ]
         },
         {
-            "name": "Brood",
-            "products": [
-
+            "name": "Pasta",
+            "products": [{
+                    "name": "macaroni"
+                },
+                {
+                    "name": "noodles"
+                },
+                {
+                    "name": "spaghetti"
+                },
+                {
+                    "name": "lasagna-noodles"
+                },
+                {
+                    "name": "sauce"
+                }
+            ]
+        },
+        {
+            "name": "Rice",
+            "products": [{
+                    "name": "basmati rice"
+                },
+                {
+                    "name": "jasmine rice"
+                },
+                {
+                    "name": "sticky rice"
+                }
+            ]
+        },
+        {
+            "name": "Spices",
+            "products": [{
+                    "name": "garlic-powder"
+                },
+                {
+                    "name": "peper"
+                },
+                {
+                    "name": "salt"
+                }
             ]
         }
     ],
@@ -161,123 +209,93 @@
                 "conversion": 1000
             },
             {
-                "name": "kop",
-                "unit": "kop",
+                "name": "cup",
+                "unit": "cup",
                 "conversion": 1
             },
             {
-                "name": "kopje",
-                "unit": "kop",
+                "name": "cups",
+                "unit": "cups",
                 "conversion": 1
             },
             {
-                "name": "kopjes",
-                "unit": "kop",
+                "name": "ts",
+                "unit": "ts",
                 "conversion": 1
             },
             {
-                "name": "el",
-                "unit": "el",
+                "name": "teaspoon",
+                "unit": "ts",
                 "conversion": 1
             },
             {
-                "name": "eetlepel",
-                "unit": "el",
+                "name": "teaspoons",
+                "unit": "ts",
                 "conversion": 1
             },
             {
-                "name": "eetlepels",
-                "unit": "el",
+                "name": "part",
+                "unit": "part",
                 "conversion": 1
             },
             {
-                "name": "tl",
-                "unit": "tl",
+                "name": "parts",
+                "unit": "part",
                 "conversion": 1
             },
             {
-                "name": "theelepel",
-                "unit": "tl",
+                "name": "piece",
+                "unit": "part",
                 "conversion": 1
             },
             {
-                "name": "theelepels",
-                "unit": "tl",
+                "name": "pieces",
+                "unit": "part",
                 "conversion": 1
             },
             {
-                "name": "stuk",
-                "unit": "stuk",
+                "name": "whole",
+                "unit": "whole",
                 "conversion": 1
             },
             {
-                "name": "stuks",
-                "unit": "stuk",
-                "conversion": 1
-            },
-            {
-                "name": "hele",
-                "unit": "hele",
-                "conversion": 1
-            },
-            {
-                "name": "halve",
-                "unit": "hele",
+                "name": "half",
+                "unit": "whole",
                 "conversion": 0.5
             },
             {
-                "name": "paar",
-                "unit": "paar",
+                "name": "pair",
+                "unit": "pair",
                 "conversion": 1
             },
             {
-                "name": "teen",
-                "unit": "teen",
+                "name": "dozen",
+                "unit": "pair",
+                "conversion": 12
+            },
+            {
+                "name": "toe of",
+                "unit": "toe",
                 "conversion": 1
             },
             {
-                "name": "tenen",
-                "unit": "teen",
+                "name": "toes of",
+                "unit": "toe",
                 "conversion": 1
             },
             {
-                "name": "teentje",
-                "unit": "teen",
+                "name": "box",
+                "unit": "box",
                 "conversion": 1
             },
             {
-                "name": "teentjes",
-                "unit": "teen",
+                "name": "bottle",
+                "unit": "bottle",
                 "conversion": 1
             },
             {
-                "name": "stengel",
-                "unit": "stengel",
-                "conversion": 1
-            },
-            {
-                "name": "stengels",
-                "unit": "stengel",
-                "conversion": 1
-            },
-            {
-                "name": "pak",
-                "unit": "pak",
-                "conversion": 1
-            },
-            {
-                "name": "pakken",
-                "unit": "pakken",
-                "conversion": 1
-            },
-            {
-                "name": "zak",
-                "unit": "zak",
-                "conversion": 1
-            },
-            {
-                "name": "zakken",
-                "unit": "zak",
+                "name": "bottles",
+                "unit": "bottle",
                 "conversion": 1
             }
         ],
@@ -288,13 +306,10 @@
                 "name": "f"
             },
             {
-                "name": "graden"
+                "name": "degrees"
             },
             {
                 "name": "celsius"
-            },
-            {
-                "name": "fahrenheit"
             },
             {
                 "name": "fahrenheit"
@@ -307,31 +322,28 @@
                 "name": "min"
             },
             {
-                "name": "minuut"
+                "name": "minute"
             },
             {
-                "name": "minuten"
+                "name": "minutes"
             },
             {
-                "name": "u"
+                "name": "h"
             },
             {
-                "name": "uur"
+                "name": "hour"
             },
             {
-                "name": "uren"
+                "name": "hours"
             },
             {
                 "name": "s"
             },
             {
-                "name": "seconde"
+                "name": "second"
             },
             {
-                "name": "seconden"
-            },
-            {
-                "name": "secondes"
+                "name": "seconds"
             }
         ]
     }

@@ -6,6 +6,11 @@ Vue.component('mealplan', {
                     <h1 class="header">Meal plan</h1>
                 </div>
             </div>
+            <div class="row" v-if="$root.mealplan.length > 0">
+                <div class="col s12 offset-m1">
+                    <a href="#/mealplan/" @click="$root.clearMealPlanAndShoppingList()" class="waves-effect waves-light btn red darken-2"><i class="material-icons left">cleaning_services</i>Empty</a>
+                </div>
+            </div>
             <div class="row">
                 <div class="col s12 offset-m1">
                     <div class="row">
