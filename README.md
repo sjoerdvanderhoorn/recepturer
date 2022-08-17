@@ -20,10 +20,13 @@ Include the quantities needed for each ingredient as you author your recipe, and
 
 ## Installation
 
-* Unpack files and serve over HTTPS.
+* Recepturer can run on any web server that is capable of serving files over HTTPS.
+* [Clone](https://github.com/sjoerdvanderhoorn/recepturer.git) or [download](https://github.com/sjoerdvanderhoorn/recepturer/archive/refs/heads/main.zip) this repository and unpack in your server's www directory.
+* All processing is done client side, in the browser. Data is stored using the [Dropbox API](https://www.dropbox.com/developers/documentation/http/documentation).
 
 ## Dependencies
 
 * [Vue.js](https://vuejs.org/v2/guide/)
 * [Materialize](https://materializecss.com/)
 * [Material Icons](https://fonts.google.com/icons?selected=Material+Icons)
+* [Dropbox SDK for Javascript](https://github.com/dropbox/dropbox-sdk-js)
