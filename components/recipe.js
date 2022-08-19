@@ -9,13 +9,13 @@ Vue.component('recipe', {
             <div class="row" style="margin-bottom: 0;">
                 <div class="col s12 offset-m1">
                     <div class="row">
-                        <div class="col s8">
+                        <div class="col s12 m8">
                             <h4>Title</h4>
                             <input id="title" type="text" v-model="recipe.title" @change="updateId()" placeholder="The greatest dish on earth...!" class="validate">
                             <h4>Description</h4>
                             <textarea id="description" v-model="recipe.description" placeholder="Simply the best..." class="materialize-textarea"></textarea>
                         </div>
-                        <div class="col s4">
+                        <div class="col s12 m4">
                             <a class="dropdown-trigger btn" :href="'#/recipe/' + recipe.id" v-show="!$root.isOnMealplan(recipe)" :data-target="'people_' + recipe.id">Add to meal plan</a>
                             <ul :id="'people_' + recipe.id" class='dropdown-content'>
                                 <li><a :href="'#/recipe/' + recipe.id" @click="$root.addToMealPlan(recipe, 1)">One person</a></li>
@@ -33,11 +33,11 @@ Vue.component('recipe', {
             <div class="row">
                 <div class="col s12 offset-m1">
                     <div class="row">
-                        <div class="col s8">
+                        <div class="col s12 m8">
                             <h4>Directions</h4>
                             <div contenteditable="true" @input="edit" v-html="formattedText"></div>
                         </div>
-                        <div class="col s4">
+                        <div class="col s12 m4">
                             <h4>Ingredients</h4>
                             <select  v-model="recipe.for">
                                 <option value="" disabled selected>Select how many people this recipe is for</option>

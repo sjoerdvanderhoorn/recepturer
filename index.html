@@ -39,13 +39,13 @@
                 <p style="text-align: justify;">
                     Let Recepturer help you organize all your recipes in one place. You can add, edit and delete recipes, and create meal plans. Simply type your recipe and all ingredients will be listed as you go.
                 </p>
-                <p style="text-align: justify; ">
+                <p style="text-align: justify;">
                     Set up your shopping list and tick off all the ingredients you need. Easily order your shopping list according to your favorite groceries store.
                 </p>
             </div>
             <div class="section center-align">
-                <button class="btn-large waves-effect waves-light " v-on:click="dropboxConnect() "><i class="material-icons left ">import_contacts</i>Open with Dropbox</button>
-                <button class="btn-large waves-effect waves-light teal lighten-3 " v-on:click="loadDemo() "><i class="material-icons left ">science</i>Demo</button>
+                <button class="btn-large waves-effect waves-light" v-on:click="dropboxConnect()"><i class="material-icons left">import_contacts</i>Open with Dropbox</button>
+                <button class="btn-large waves-effect waves-light teal lighten-3" v-on:click="loadDemo()"><i class="material-icons left">science</i>Demo</button>
             </div>
             <div class="section">
                 <p>
@@ -88,23 +88,23 @@
         </div>
 
         <!-- App -->
-        <header v-cloak v-if="page!='start' ">
-            <a data-target="nav-mobile " class="top-nav sidenav-trigger btn-floating btn-large teal lighten-3 waves-effect waves-light hide-on-large-only " style="margin: 15px; ">
-                <i class="material-icons ">menu</i>
+        <header v-cloak v-if="page!='start'">
+            <a data-target="nav-mobile" class="top-nav sidenav-trigger btn-floating btn-large teal lighten-3 waves-effect waves-light hide-on-large-only" style="margin: 15px;">
+                <i class="material-icons">menu</i>
             </a>
-            <ul id="nav-mobile " class="sidenav sidenav-fixed ">
-                <li class="center-align " style="padding-top: 20px; ">
+            <ul id="nav-mobile" class="sidenav sidenav-fixed">
+                <li class="center-align" style="padding-top: 20px;">
                     <img src="resources/faviconio-logo/r.svg" />
-                    <img src="resources/faviconio-logo/recepturer.svg" width="80% " />
+                    <img src="resources/faviconio-logo/recepturer.svg" width="80%" />
                 </li>
                 <li>
-                    <div class="divider "></div>
+                    <div class="divider"></div>
                 </li>
-                <li class="bold sidenav-close " :class="{active: page=='recipes' || page=='recipe' } ">
-                    <a :href=" '#/recipes/' " class="waves-effect waves-teal "><i class="material-icons ">blender</i>Recipes <span class="new badge " data-badge-caption=" ">{{this.recipes.length}}</span></a>
+                <li class="bold sidenav-close" :class="{active: page=='recipes' || page=='recipe' }">
+                    <a :href=" '#/recipes/'" class="waves-effect waves-teal"><i class="material-icons">blender</i>Recipes <span class="new badge" data-badge-caption="">{{this.recipes.length}}</span></a>
                 </li>
-                <li class="bold sidenav-close " :class="{active: page=='mealplan' } ">
-                    <a :href=" '#/mealplan/' " class="waves-effect waves-teal "><i class="material-icons ">menu_book</i>Meal plan <span class="new badge " data-badge-caption=" " v-if="this.mealplan.length> 0">{{this.mealplan.length}}</span>
+                <li class="bold sidenav-close" :class="{active: page=='mealplan' }">
+                    <a :href=" '#/mealplan/'" class="waves-effect waves-teal"><i class="material-icons">menu_book</i>Meal plan <span class="new badge" data-badge-caption="" v-if="this.mealplan.length> 0">{{this.mealplan.length}}</span>
                     </a>
                 </li>
                 <li class="bold sidenav-close" :class="{active: page=='shoppinglist'}">
@@ -117,7 +117,7 @@
                     <a :href="'#/administration/'" class="waves-effect waves-teal"><i class="material-icons">tune</i>Administration</a>
                 </li>
                 <li>
-                    <a class="subheader">{{ storage.location=='dropbox' ? "Dropbox" : "Storage" }}</a>
+                    <a class="subheader">{{ storage.location=='dropbox' ?"Dropbox" :"Storage" }}</a>
                 </li>
                 <li class="bold sidenav-close" v-if="storage.location=='dropbox'">
                     <a @click="dropboxSave()" v-if="!storage.outstandingChanges" class="waves-effect waves-teal grey-text"><i class="material-icons">published_with_changes</i>Up to date</a>
@@ -139,28 +139,32 @@
             </ul>
         </header>
 
-        <main v-if="page=='recipes'">
-            <recipes :recipes="recipes" />
-        </main>
+        <main class="container">
 
-        <main v-if="page=='recipe'">
-            <recipe :recipe="recipe" />
-        </main>
+            <main v-if="page=='recipes'">
+                <recipes :recipes="recipes" />
+            </main>
 
-        <main v-if="page=='mealplan'">
-            <mealplan :mealplan="mealplan" />
-        </main>
+            <main v-if="page=='recipe'">
+                <recipe :recipe="recipe" />
+            </main>
 
-        <main v-if="page=='shoppinglist'">
-            <shoppinglist :mealplan="mealplan" :shoppinglist="shoppinglist" :categories="categories" />
-        </main>
+            <main v-if="page=='mealplan'">
+                <mealplan :mealplan="mealplan" />
+            </main>
 
-        <main v-if="page=='administration'">
-            <administration :settings="settings" />
-        </main>
+            <main v-if="page=='shoppinglist'">
+                <shoppinglist :mealplan="mealplan" :shoppinglist="shoppinglist" :categories="categories" />
+            </main>
 
-        <main v-if="page=='debug'">
-            <debug :recipes="recipes" />
+            <main v-if="page=='administration'">
+                <administration :settings="settings" />
+            </main>
+
+            <main v-if="page=='debug'">
+                <debug :recipes="recipes" />
+            </main>
+
         </main>
 
     </div>

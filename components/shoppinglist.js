@@ -23,29 +23,32 @@ Vue.component('shoppinglist', {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="ingredient in category.ingredients">
+                                <tr v-for="ingredient in category.ingredients" class="">
                                     <td width="40">
                                         <label>
                                             <input v-model="ingredient.checked" type="checkbox" @change="toggleIngredient(ingredient)" /><span></span>
                                         </label>
                                     </td>
-                                    <td width="50" :class="{'right-align': true, strike:ingredient.checked}">
+                                    <td width="40" :class="{'right-align': true, strike:ingredient.checked}">
                                         {{ingredient.quantity}}
-                                    <td width="100" :class="{strike:ingredient.checked}">
+                                    </td>
+                                    <td width="40" :class="{strike:ingredient.checked}">
                                         {{ingredient.unit}}
                                     </td>
-                                    <td :class="{strike:ingredient.checked}">
-                                        {{ingredient.product}}
-                                    </td>
-                                    <td width="200" class="right-align">
-                                        <a href="#/shoppinglist/" @click="removeIngredient(ingredient)" title="Remove ingredient" v-if="isAdhocIngredient(ingredient)" class="waves-effect waves-teal btn-flat"><i class="material-icons">undo</i></a>
-                                        <a href="#/shoppinglist/" @click="changeQuantity(ingredient)" title="Change quantity" class="waves-effect waves-teal btn-flat"><i class="material-icons">edit</i></a>
-                                        <a href="#/shoppinglist/" title="Categorize" class="dropdown-trigger waves-effect waves-teal btn-flat" :data-target="'category_' + ingredient.product"><i class="material-icons">category</i></a>
-                                        <ul :id="'category_' + ingredient.product" class='dropdown-content'>
-                                            <li v-for="category in categories"><a href="#/shoppinglist/" @click="changeCategory(ingredient, category)">{{category.name}}</a></li>
-                                            <li class="divider" tabindex="-1"></li>
-                                            <li><a href="#/shoppinglist/" @click="newCategory(ingredient)">New category</a></li>
-                                        </ul>
+                                    <td>
+                                        <span :class="{strike:ingredient.checked}">
+                                            {{ingredient.product}}
+                                        </span>
+                                        <span class="right" style="height: 10px;">
+                                            <i class="material-icons pointer" @click="removeIngredient(ingredient)" title="Remove ingredient" v-if="isAdhocIngredient(ingredient)">undo</i>
+                                            <i class="material-icons pointer" @click="changeQuantity(ingredient)" title="Change quantity">edit</i>
+                                            <i class="material-icons pointer dropdown-trigger" title="Categorize" :data-target="'category_' + ingredient.product">category</i>
+                                            <ul :id="'category_' + ingredient.product" class='dropdown-content'>
+                                                <li v-for="category in categories"><a href="#/shoppinglist/" @click="changeCategory(ingredient, category)">{{category.name}}</a></li>
+                                                <li class="divider" tabindex="-1"></li>
+                                                <li><a href="#/shoppinglist/" @click="newCategory(ingredient)">New category</a></li>
+                                            </ul>
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>

@@ -10,7 +10,7 @@ Vue.component('administration', {
                 <div class="col s12 offset-m1">
                     <h4>Categories</h4>
                 </div>
-                <div class="col s6 offset-m1">
+                <div class="col s12 m6 offset-m1">
                     <table class="striped">
                         <thead>
                             <tr>
@@ -61,7 +61,7 @@ Vue.component('administration', {
                 <div class="col s12 offset-m1">
                     <h4>Unit of measure</h4>
                 </div>
-                <div class="col s6 offset-m1">
+                <div class="col s12 m6 offset-m1">
                     <table class="striped">
                         <thead>
                             <tr>
@@ -94,7 +94,7 @@ Vue.component('administration', {
                 <div class="col s12 offset-m1">
                     <h4>Temperature</h4>
                 </div>
-                <div class="col s6 offset-m1">
+                <div class="col s12 m6 offset-m1">
                     <table class="striped">
                         <thead>
                             <tr>
@@ -119,7 +119,7 @@ Vue.component('administration', {
                 <div class="col s12 offset-m1">
                     <h4>Time</h4>
                 </div>
-                <div class="col s6 offset-m1">
+                <div class="col s12 m6 offset-m1">
                     <table class="striped">
                         <thead>
                             <tr>

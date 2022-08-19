@@ -34,3 +34,7 @@ div[contenteditable="true"] .recipe.temperature {
     text-decoration: line-through;
     color: rgba(158, 158, 158);
 }
+
+.pointer {
+    cursor: pointer;
+}
