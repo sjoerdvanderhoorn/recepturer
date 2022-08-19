@@ -294,7 +294,7 @@
                         var dbx = new Dropbox.Dropbox({
                             clientId: 'ssfj3kbdixnrev9'
                         });
-                        var authUrl = dbx.auth.getAuthenticationUrl('http://localhost:8080/')
+                        var authUrl = dbx.auth.getAuthenticationUrl(`${window.location.protocol}//${window.location.host}${window.location.pathname}`)
                             .then(function(authUrl) {
                                 // Open URL for authentication
                                 document.location = authUrl;
